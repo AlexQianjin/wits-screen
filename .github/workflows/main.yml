@@ -27,7 +27,7 @@ jobs:
       run: |
         docker info
         cd $GITHUB_WORKSPACE
-        ll
+        ls -al
         docker run --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
     
     # Build image

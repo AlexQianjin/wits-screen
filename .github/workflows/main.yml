@@ -26,7 +26,9 @@ jobs:
     - name: Build front-end
       run: |
         docker info
-        docker run --rm --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
+        cd $GITHUB_WORKSPACE
+        ll
+        docker run --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
     
     # Build image
     - name: Build image

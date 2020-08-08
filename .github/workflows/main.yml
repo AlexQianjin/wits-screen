@@ -33,12 +33,15 @@ jobs:
         cd client
         npm install
         npm run build
-        cp -r build/* ../server/public"
+        cp -r build/* ../server/public
     
     # Build image
     - name: Build image
       run: |
-        docker info
+        ls -al
+        echo 'switch directory'
+        cd $GITHUB_WORKSPACE
+        ls -al
         docker build -t nodeapp -f Dockerfile .
 
     # Deploy the image

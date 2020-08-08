@@ -25,7 +25,7 @@ jobs:
 
     # Build front-end
     - name: Build front-end
-      using: docker
+      uses: docker
       run: |
         docker info
         cd $GITHUB_WORKSPACE
@@ -34,7 +34,7 @@ jobs:
     
     # Build image
     - name: Build image
-      using: docker
+      uses: docker
       run: |
         docker info
         docker build -t nodeapp -f Dockerfile .
@@ -46,7 +46,7 @@ jobs:
         HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
         HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
       name: Deploy the image
-      using: docker
+      uses: docker
       run: |         
         docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
         docker tag nodeapp registry.heroku.com/$HEROKU_APP_NAME/web

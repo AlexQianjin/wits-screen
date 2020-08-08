@@ -31,12 +31,16 @@ jobs:
     # Build image
     - name: Build image
       run: |
-        echo -e "NODE_ENV=$NODE_ENV \nPORT=$PORT \nMONGO_CONNECTION_POOLSIZE=$MONGO_CONNECTION_POOLSIZE \nMONGO_SOCKET_TIMEOUT_MS=￥MONGO_SOCKET_TIMEOUT_MS \nMONGODB_PATH=$MONGOLAB_URI" >> .env         
         docker info
         docker build -t nodeapp -f Dockerfile .
 
-    # deploy the image
-    - name: Deploy the image
+    # Deploy the image
+    - shell: bash
+      env: 
+        HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
+        HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
+        HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+      name: Deploy the image
       run: |         
         docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
         docker tag nodeapp registry.heroku.com/$HEROKU_APP_NAME/web

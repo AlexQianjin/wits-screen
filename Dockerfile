@@ -10,7 +10,6 @@ MAINTAINER qianjin.qin@qq.com
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN \
-  mv .env ./server && \
   cd server && \
   npm install
 # Define default command.

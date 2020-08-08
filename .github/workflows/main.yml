@@ -22,12 +22,24 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    # Build front-end
+    - name: Build front-end
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        docker info
+        docker run --rm --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
+    
+    # Build image
+    - name: Build image
+      run: |
+        echo -e "NODE_ENV=$NODE_ENV \nPORT=$PORT \nMONGO_CONNECTION_POOLSIZE=$MONGO_CONNECTION_POOLSIZE \nMONGO_SOCKET_TIMEOUT_MS=￥MONGO_SOCKET_TIMEOUT_MS \nMONGODB_PATH=$MONGOLAB_URI" >> .env         
+        docker info
+        docker build -t nodeapp -f Dockerfile .
+
+    # deploy the image
+    - name: Deploy the image
+      run: |         
+        docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
+        docker tag nodeapp registry.heroku.com/$HEROKU_APP_NAME/web
+        docker push registry.heroku.com/$HEROKU_APP_NAME/web                
+        curl https://cli-assets.heroku.com/install.sh | sh
+        heroku container:release web -a $HEROKU_APP_NAME

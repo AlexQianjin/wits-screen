@@ -25,16 +25,15 @@ jobs:
 
     # Build front-end
     - name: Build front-end
-      uses: docker
       run: |
         docker info
         cd $GITHUB_WORKSPACE
         ls -al
+        node -v
         docker run --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
     
     # Build image
     - name: Build image
-      uses: docker
       run: |
         docker info
         docker build -t nodeapp -f Dockerfile .
@@ -46,7 +45,6 @@ jobs:
         HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
         HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
       name: Deploy the image
-      uses: docker
       run: |         
         docker login --username=$HEROKU_USERNAME --password=$HEROKU_API_KEY registry.heroku.com
         docker tag nodeapp registry.heroku.com/$HEROKU_APP_NAME/web

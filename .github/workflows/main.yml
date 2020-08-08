@@ -30,7 +30,10 @@ jobs:
         cd $GITHUB_WORKSPACE
         ls -al
         node -v
-        docker run --volume="$PWD:/usr/src/app" -w /usr/src/app -it node:14.7.0-alpine /bin/sh -c "cd client && npm install && npm run build && cp -r build/* ../server/public"
+        cd client
+        npm install
+        npm run build
+        cp -r build/* ../server/public"
     
     # Build image
     - name: Build image

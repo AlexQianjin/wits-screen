@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 
 import Wuhan from './Wuhan';
+import OtherCity from './OtherCity';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -42,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 
 const Weather = props => {
 	const { className, ...rest } = props;
+	const cities = ['北京', '台北'];
 
 	const classes = useStyles();
 
@@ -68,6 +70,25 @@ const Weather = props => {
 				</Grid>
 				<Grid>
 					<Wuhan/>
+				</Grid>
+				<Grid
+					container
+					justify="space-between"
+				>
+					{cities.map((city, index) => {return (
+						<Grid
+							key={index}
+							item
+							lg={6}
+							sm={6}
+							xl={6}
+							xs={12}
+						>
+							<OtherCity
+								city={city}
+							/>
+						</Grid>
+					);})}
 				</Grid>
 			</CardContent>
 		</Card>

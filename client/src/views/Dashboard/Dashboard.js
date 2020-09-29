@@ -23,6 +23,7 @@ const Dashboard = () => {
 			<Grid
 				container
 				spacing={0}
+				style={{height: '800px'}}
 			>
 				<Grid
 					item

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, CircularProgress } from '@material-ui/core';
 
 import useInterval from '../../../../helpers/useInterval';
 
@@ -40,8 +40,8 @@ const OtherCity = props => {
 	useInterval(getWeather, 60 * 60 * 1000);
 
 	return (
-		<div>{weather ?
-			<Card>
+		<Card>
+			{weather ?
 				<CardContent>
 					<Grid item>{weather.city}</Grid>
 					<Grid container>
@@ -105,10 +105,9 @@ const OtherCity = props => {
 							</Grid>
 						</Grid>
 					</Grid>
-				</CardContent>
-			</Card> :
-			<div>Loading...</div>}
-		</div>
+				</CardContent> :
+				<CircularProgress />}
+		</Card>
 	);
 };
 

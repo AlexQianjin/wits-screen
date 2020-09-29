@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=LOCAL&& nodemon ./bin/www",
-    "debug": "set NODE_ENV=LOCAL&& nodemon --debug ./bin/www"
+    "debug": "set NODE_ENV=LOCAL&& nodemon --inspect ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "csv": "^5.3.2",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1"

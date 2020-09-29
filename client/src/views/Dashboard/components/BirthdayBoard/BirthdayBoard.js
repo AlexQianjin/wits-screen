@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, CircularProgress } from '@material-ui/core';
 
 import Birthday from './Birthday';
 
@@ -37,56 +37,68 @@ const BirthdayBoard = props => {
 
 	const classes = useStyles();
 
-	const employees = [
-		{name: 'Alex', department: 'IC3422'},
-		{name: 'Alex', department: 'IC3422'},
-		{name: 'Alex', department: 'IC3422'},
-		{name: 'Alex', department: 'IC3422'},
-		{name: 'Alex', department: 'IC3422'},
-		{name: 'Alex', department: 'IC3422'}
-	];
+	const [employees, setEmployees] = useState([]);
+
+	const getEmployees = () => {
+		console.log('fetch employees');
+		fetch('/api/employees')
+			.then(response => {
+				return response.json();
+			})
+			.then(json => {
+				console.log(json);
+				setEmployees(json.result);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
+
+	useEffect(getEmployees, []);
 
 	return (
 		<Card
 			{...rest}
 			className={clsx(classes.root, className)}
 		>
-			<CardContent>
-				<Grid
-					container
-					justify="space-between"
-				>
-					<Grid item>
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-							variant="h3"
-						>
-							今日寿星
-						</Typography>
-					</Grid>
-				</Grid>
-				<Grid
-					container
-					justify="space-between"
-				>
-					{employees.map((e, index) => {
-						return (
-							<Grid
-								key={index}
-								item
+			{employees.length > 0 ?
+				<CardContent>
+					<Grid
+						container
+						justify="space-between"
+					>
+						<Grid item>
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+								variant="h3"
 							>
-								<Birthday
-									name={e.name}
-									department={e.department}
+							今日寿星
+							</Typography>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						justify="space-between"
+					>
+						{employees.slice(1).map((e, index) => {
+							return (
+								<Grid
+									key={index}
+									item
 								>
-								</Birthday>
-							</Grid>
-						);
-					})}
-				</Grid>
-			</CardContent>
+									<Birthday
+										name={e[0]}
+										department={e[1]}
+									>
+									</Birthday>
+								</Grid>
+							);
+						})}
+					</Grid>
+				</CardContent> :
+				<CircularProgress />}
 		</Card>
 	);
 };

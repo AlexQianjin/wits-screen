@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, CircularProgress } from '@material-ui/core';
 
 import useInterval from '../../../../helpers/useInterval';
 
@@ -37,8 +37,8 @@ const Wuhan = () => {
 	useInterval(getWeather, 60 * 60 * 1000);
 
 	return (
-		<div>{weather ?
-			<Card>
+		<Card>
+			{weather ?
 				<CardContent>
 					<Grid item>{weather.city}</Grid>
 					<Grid container>
@@ -119,30 +119,10 @@ const Wuhan = () => {
 								</Grid>);
 						})
 						}
-
-						{/* <Grid
-							item
-							lg={2}
-							sm={6}
-							xl={2}
-							xs={12}
-						>
-							<Typography variant="h6">WistronITS</Typography>
-						</Grid>
-						<Grid
-							item
-							lg={2}
-							sm={6}
-							xl={2}
-							xs={12}
-						>
-							<Typography variant="h6">WistronITS</Typography>
-						</Grid> */}
 					</Grid>
-				</CardContent>
-			</Card> :
-			<div>Loading...</div>}
-		</div>
+				</CardContent> :
+				<CircularProgress />}
+		</Card>
 	);
 };
 

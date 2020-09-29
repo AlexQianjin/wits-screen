@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import {
 	DateTime,
 	Weather,
-	TasksProgress,
+	BirthdayBoard,
 	TotalProfit
 } from './components';
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
 					xl={2}
 					xs={12}
 				>
-					<TasksProgress />
+					<BirthdayBoard />
 				</Grid>
 				<Grid
 					item

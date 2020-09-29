@@ -6,7 +6,7 @@ import {
 	DateTime,
 	Weather,
 	BirthdayBoard,
-	TotalProfit
+	Daily
 } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -23,7 +23,7 @@ const Dashboard = () => {
 			<Grid
 				container
 				spacing={0}
-				style={{height: '800px'}}
+				style={{height: '720px'}}
 			>
 				<Grid
 					item
@@ -59,7 +59,7 @@ const Dashboard = () => {
 					xl={4}
 					xs={12}
 				>
-					<TotalProfit />
+					<Daily />
 				</Grid>
 			</Grid>
 		</div>

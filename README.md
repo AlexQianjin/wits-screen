@@ -28,6 +28,7 @@ Date | Cost Hours | Summary
 09/28/2020 | 8 | Implement the weather module
 09/29/2020 | 1 | Implement the weather of other cities
 09/29/2020 | 2 | Implement the front-end of the birthday board
+09/29/2020 | 1 | Implement the daily module
 
 ## Release History
 Date | Summary

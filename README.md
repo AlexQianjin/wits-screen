@@ -30,6 +30,7 @@ Date | Cost Hours | Summary
 09/29/2020 | 2 | Implement the front-end of the birthday board
 09/29/2020 | 1 | Implement the daily module
 09/29/2020 | 3 | Implement the back-end of the birthday board and integrate with front-end
+09/30/2020 | 6 | Integrate the UI style
 
 ## Release History
 Date | Summary

@@ -9,13 +9,18 @@ const getEmployees = (req, res) => {
             res.status(400).json({message: 'read csv file failed'});
         }
         parse(data, (err, output) => {
-              if(err) {
-                  res.status(400).json({message: 'parse csv file failed'});
-              }
-              console.log(output);
+            if(err) {
+                res.status(400).json({message: 'parse csv file failed'});
+            }
+            let birthdayEmployees = output.filter(arr => {
+                let birthday = new Date(arr[4]);
+                let today = new Date();
+                return birthday.getDate() === today.getDate() && birthday.getMonth() === today.getMonth();
+            });
+            console.log(birthdayEmployees);
             res
             .status(200)
-            .json({result: output});
+            .json({result: birthdayEmployees});
           });
     });
 };

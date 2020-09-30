@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 
 import Time from './Time';
 import Date from './Date';
@@ -57,18 +57,22 @@ const DateTime = props => {
 					justify="space-between"
 				>
 					<Grid item>
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-							variant="h3"
-						>
-							Wistron 纬创软件
-						</Typography>
-						<Typography variant="h6">WistronITS</Typography>
-						<Typography variant="h3"><Time/></Typography>
+						<CardMedia
+							component="img"
+							alt="Wistron ITS"
+							image="./images/img_logo.png"
+							title="Wistron ITS"
+						></CardMedia>
 					</Grid>
 				</Grid>
+				<div className={classes.difference}>
+					<Typography
+						className={classes.title}
+						variant="h3"
+					>
+						<Time />
+					</Typography>
+				</div>
 				<div className={classes.difference}>
 					<Typography
 						className={classes.title}
@@ -77,6 +81,19 @@ const DateTime = props => {
 						<Date/>
 					</Typography>
 				</div>
+				<Grid
+					container
+					justify="space-between"
+				>
+					<Grid item>
+						<CardMedia
+							component="img"
+							alt="Beijing Time"
+							image="./images/img_leftblock.png"
+							title="Beijing Time"
+						></CardMedia>
+					</Grid>
+				</Grid>
 			</CardContent>
 		</Card>
 	);

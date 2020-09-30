@@ -70,7 +70,6 @@ const BirthdayBoard = props => {
 						<Grid item>
 							<Typography
 								className={classes.title}
-								color="textSecondary"
 								gutterBottom
 								variant="h3"
 							>
@@ -82,7 +81,7 @@ const BirthdayBoard = props => {
 						container
 						justify="space-between"
 					>
-						{employees.slice(1).map((e, index) => {
+						{employees.map((e, index) => {
 							return (
 								<Grid
 									key={index}
@@ -90,7 +89,8 @@ const BirthdayBoard = props => {
 								>
 									<Birthday
 										name={e[0]}
-										department={e[1]}
+										number={e[1]}
+										department={e[2]}
 									>
 									</Birthday>
 								</Grid>

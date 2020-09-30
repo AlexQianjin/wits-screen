@@ -1,2 +1,9 @@
 export { default as Facebook } from './Facebook';
 export { default as Google } from './Google';
+export { default as Clear } from './Clear';
+export { default as Cloudy } from './Cloudy';
+export { default as Foggy } from './Foggy';
+export { default as LittleRain } from './LittleRain';
+export { default as Showers } from './Showers';
+export { default as Snow } from './Snow';
+export { default as TorrentialRain } from './TorrentialRain';

@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
 	},
 	content: {
 		height: '100%',
-		background: '#FFF'
+		backgroundImage: 'url(./images/img_bg.png)'
 	}
 }));
 

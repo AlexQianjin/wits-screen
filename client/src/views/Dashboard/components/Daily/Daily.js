@@ -47,7 +47,6 @@ const Daily = props => {
 					<Grid item>
 						<Typography
 							className={classes.title}
-							color="textSecondary"
 							gutterBottom
 							variant="h3"
 						>

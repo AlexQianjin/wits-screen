@@ -11,7 +11,7 @@ const DateString = () => {
 	return (
 		<div>
 			<Card>{date.toLocaleDateString()}</Card>
-			<Card>{['SUN', 'MON', 'TUES', 'WED', 'THUR', 'FRI', 'SAT'][date.getDay()]}</Card>
+			<Card>{['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][date.getDay()]}</Card>
 		</div>
 	);
 };

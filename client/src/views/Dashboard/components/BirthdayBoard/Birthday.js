@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 
 const Birthday = props => {
-	const { name, department } = props;
+	const { name, number, department } = props;
+	let avatarPath = `./avatar/${number}.png`;
 	return (
 		<Card>
 			<CardContent>
@@ -17,7 +18,7 @@ const Birthday = props => {
 					>
 						<Avatar
 							alt="avatar"
-							src="./avatar/test-avatar.png"
+							src={avatarPath}
 						></Avatar>
 					</Grid>
 					<Grid
@@ -38,6 +39,7 @@ const Birthday = props => {
 
 Birthday.propTypes = {
 	name: PropTypes.string,
+	number: PropTypes.string,
 	department: PropTypes.string
 };
 

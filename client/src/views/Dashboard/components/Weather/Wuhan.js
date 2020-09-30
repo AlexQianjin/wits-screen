@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Grid, Typography, CircularProgress } from '@material-ui/core';
 
 import useInterval from '../../../../helpers/useInterval';
+import getWeatherIcon from '../../../../helpers/getWeatherIcon';
 
 const Wuhan = () => {
 	const [weather, setWeather] = useState(null);
@@ -52,18 +53,18 @@ const Wuhan = () => {
 							<Grid container>
 								<Grid
 									item
-									lg={4}
+									lg={6}
 									sm={6}
-									xl={4}
+									xl={6}
 									xs={12}
 								>
-									<Typography variant="h6">天气图片</Typography>
+									{getWeatherIcon(weather.data[0].wea)}
 								</Grid>
 								<Grid
 									item
-									lg={8}
+									lg={6}
 									sm={6}
-									xl={8}
+									xl={6}
 									xs={12}
 								>
 									<Typography variant="h6">{weather.data[0].tem}°C</Typography>
@@ -72,18 +73,18 @@ const Wuhan = () => {
 							<Grid container>
 								<Grid
 									item
-									lg={4}
+									lg={6}
 									sm={6}
-									xl={4}
+									xl={6}
 									xs={12}
 								>
 									<Typography variant="h6">{weather.data[0].wea}</Typography>
 								</Grid>
 								<Grid
 									item
-									lg={8}
+									lg={6}
 									sm={6}
-									xl={8}
+									xl={6}
 									xs={12}
 								>
 									<Grid
@@ -111,7 +112,7 @@ const Wuhan = () => {
 									xs={12}
 									key={index}
 								>
-									<Typography variant="h6">{data.day.split('（')[0]}</Typography>
+									<Typography variant="h6">{index === 0 ? '明天' : `${data.date.split('-')[1]}月${data.date.split('-')[2]}日`}</Typography>
 									<Typography variant="h6">天气图片</Typography>
 									<Typography variant="h6">{data.tem2}~{data.tem1}°C</Typography>
 									<Typography variant="h6">{data.win[0]}</Typography>

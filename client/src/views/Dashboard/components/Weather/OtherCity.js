@@ -5,7 +5,7 @@ import { Card, CardContent, Grid, Typography, CircularProgress } from '@material
 import useInterval from '../../../../helpers/useInterval';
 
 const OtherCity = props => {
-	const url = `https://www.tianqiapi.com/api/?appid=23035354&appsecret=8YvlPNrz&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
+	const url = `https://www.tianqiapi.com/api/?appid=77869124&appsecret=cHVGz6Vx&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {

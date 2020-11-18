@@ -1,4 +1,4 @@
-export default {
+const MuiTypography = {
 	gutterBottom: {
 		marginBottom: 8
 	},
@@ -6,3 +6,5 @@ export default {
 		color: '#FFF'
 	}
 };
+
+export default MuiTypography;

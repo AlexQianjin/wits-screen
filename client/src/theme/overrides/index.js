@@ -5,7 +5,7 @@ import MuiTableCell from './MuiTableCell';
 import MuiTableHead from './MuiTableHead';
 import MuiTypography from './MuiTypography';
 
-export default {
+const CustomTheme = {
 	MuiButton,
 	MuiIconButton,
 	MuiPaper,
@@ -13,3 +13,5 @@ export default {
 	MuiTableHead,
 	MuiTypography
 };
+
+export default CustomTheme;

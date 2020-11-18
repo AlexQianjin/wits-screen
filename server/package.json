@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=LOCAL&& nodemon ./bin/www",
-    "debug": "set NODE_ENV=LOCAL&& nodemon --inspect ./bin/www"
+    "debug": "set NODE_ENV=LOCAL&&set PORT=3030&& nodemon --inspect ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.5",

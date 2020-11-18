@@ -23,7 +23,7 @@ const Dashboard = () => {
 			<Grid
 				container
 				spacing={0}
-				style={{height: '720px'}}
+				style={{minHeight: '100vh'}}
 			>
 				<Grid
 					item

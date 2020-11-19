@@ -24,8 +24,8 @@ const useStyles = makeStyles(theme => ({
 		width: 56
 	},
 	icon: {
-		height: 32,
-		width: 32
+		marginTop: 34,
+		marginLeft: 48
 	},
 	difference: {
 		marginTop: theme.spacing(2),
@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
 	differenceValue: {
 		color: theme.palette.error.dark,
 		marginRight: theme.spacing(1)
+	},
+	beijingTime: {
+		marginBottom: 58,
+		marginLeft: 40
 	}
 }));
 
@@ -51,7 +55,7 @@ const DateTime = props => {
 			{...rest}
 			className={clsx(classes.root, className)}
 		>
-			<CardContent>
+			<CardContent style={{padding: 0}}>
 				<Grid
 					container
 					justify="space-between"
@@ -62,6 +66,7 @@ const DateTime = props => {
 							alt="Wistron ITS"
 							image="./images/img_logo.png"
 							title="Wistron ITS"
+							className={classes.icon}
 						></CardMedia>
 					</Grid>
 				</Grid>
@@ -91,6 +96,7 @@ const DateTime = props => {
 							alt="Beijing Time"
 							image="./images/img_leftblock.png"
 							title="Beijing Time"
+							className={classes.beijingTime}
 						></CardMedia>
 					</Grid>
 				</Grid>

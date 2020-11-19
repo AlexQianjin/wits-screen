@@ -58,7 +58,7 @@ const Wuhan = () => {
 									xl={6}
 									xs={12}
 								>
-									{getWeatherIcon(weather.data[0].wea)}
+									{getWeatherIcon(weather.data[0].wea_img)}
 								</Grid>
 								<Grid
 									item
@@ -113,7 +113,7 @@ const Wuhan = () => {
 									key={index}
 								>
 									<Typography variant="h6">{index === 0 ? '明天' : `${data.date.split('-')[1]}月${data.date.split('-')[2]}日`}</Typography>
-									<Typography variant="h6">天气图片</Typography>
+									<Typography variant="h6">{getWeatherIcon(data.wea_img)}</Typography>
 									<Typography variant="h6">{data.tem2}~{data.tem1}°C</Typography>
 									<Typography variant="h6">{data.win[0]}</Typography>
 									<Typography variant="h6">{data.air_level}</Typography>

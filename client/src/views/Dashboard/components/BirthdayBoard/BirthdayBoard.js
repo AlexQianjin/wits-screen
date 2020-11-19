@@ -38,6 +38,7 @@ const BirthdayBoard = props => {
 	const classes = useStyles();
 
 	const [employees, setEmployees] = useState([]);
+	const [isLoading, setLoading] = useState(true);
 
 	const getEmployees = () => {
 		console.log('fetch employees');
@@ -47,6 +48,7 @@ const BirthdayBoard = props => {
 			})
 			.then(json => {
 				console.log(json);
+				setLoading(false);
 				setEmployees(json.result);
 			})
 			.catch(err => {
@@ -56,49 +58,61 @@ const BirthdayBoard = props => {
 
 	useEffect(getEmployees, []);
 
+	const render = (isLoading, employees) => {
+		if (isLoading) {
+			return <CircularProgress />;
+		}
+
+		if (employees.length === 0) {
+			return '无寿星';
+		}
+
+		return (
+			<Grid
+				container
+				justify="space-between"
+			>
+				{employees.map((e, index) => {
+					return (
+						<Grid
+							key={index}
+							item
+						>
+							<Birthday
+								name={e[0]}
+								number={e[1]}
+								department={e[2]}
+							>
+							</Birthday>
+						</Grid>
+					);
+				})}
+			</Grid>
+		);
+	};
+
 	return (
 		<Card
 			{...rest}
 			className={clsx(classes.root, className)}
 		>
-			{employees.length > 0 ?
-				<CardContent>
-					<Grid
-						container
-						justify="space-between"
-					>
-						<Grid item>
-							<Typography
-								className={classes.title}
-								gutterBottom
-								variant="h3"
-							>
+			<CardContent>
+				<Grid
+					container
+					justify="space-between"
+				>
+					<Grid item>
+						<Typography
+							className={classes.title}
+							gutterBottom
+							variant="h3"
+						>
 							今日寿星
-							</Typography>
-						</Grid>
+						</Typography>
 					</Grid>
-					<Grid
-						container
-						justify="space-between"
-					>
-						{employees.map((e, index) => {
-							return (
-								<Grid
-									key={index}
-									item
-								>
-									<Birthday
-										name={e[0]}
-										number={e[1]}
-										department={e[2]}
-									>
-									</Birthday>
-								</Grid>
-							);
-						})}
-					</Grid>
-				</CardContent> :
-				<CircularProgress />}
+				</Grid>
+				{render(isLoading, employees)}
+			</CardContent>
 		</Card>
 	);
 };

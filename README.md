@@ -33,6 +33,7 @@ Date | Cost Hours | Summary
 09/30/2020 | 6 | Integrate the UI style
 10/27/2020 | 1 | Updated the api key of the weather api
 11/19/2020 | 5 | Implemented weather icons
+11/19/2020 | 2 | Updated the style of time component
 
 ## Release History
 Date | Summary

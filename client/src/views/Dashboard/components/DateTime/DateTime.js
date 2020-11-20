@@ -73,14 +73,18 @@ const DateTime = props => {
 						></CardMedia>
 					</Grid>
 				</Grid>
-				<div className={classes.difference}>
-					<div
+				<div
+					className={classes.difference}
+					style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")'}}
+				>
+					{/* <div
 						className={classes.title}
 						variant="h3"
-						style={{width: '553px', height: '358px', backgroundImage: './Images/img_bg_time.png'}}
+						style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")'}}
 					>
-						<Time />
-					</div>
+
+					</div> */}
+					<Time />
 				</div>
 				<div>
 					<Typography

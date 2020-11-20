@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 
 import useInterval from '../../../../helpers/useInterval';
 
@@ -10,7 +10,12 @@ const Time = () => {
 
 	return (
 		<Card>
-			{date.toLocaleTimeString()}
+			<Typography
+				variant="h3"
+				style={{fontWeight: '700'}}
+			>
+				{date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false})}
+			</Typography>
 		</Card>
 	);
 };

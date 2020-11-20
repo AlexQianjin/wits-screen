@@ -30,7 +30,10 @@ const useStyles = makeStyles(theme => ({
 	difference: {
 		marginTop: theme.spacing(2),
 		display: 'flex',
-		alignItems: 'center'
+		justifyContent: 'center',
+		alignItems: 'center',
+		textAlign: 'center',
+		height: 'auto'
 	},
 	differenceIcon: {
 		color: theme.palette.error.dark
@@ -71,14 +74,15 @@ const DateTime = props => {
 					</Grid>
 				</Grid>
 				<div className={classes.difference}>
-					<Typography
+					<div
 						className={classes.title}
 						variant="h3"
+						style={{width: '553px', height: '358px', backgroundImage: './Images/img_bg_time.png'}}
 					>
 						<Time />
-					</Typography>
+					</div>
 				</div>
-				<div className={classes.difference}>
+				<div>
 					<Typography
 						className={classes.title}
 						variant="h3"

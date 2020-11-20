@@ -9,7 +9,9 @@ const Time = () => {
 	useInterval(() => setDate(new Date()), 1000);
 
 	return (
-		<Card>{date.toLocaleTimeString()}</Card>
+		<Card>
+			{date.toLocaleTimeString()}
+		</Card>
 	);
 };
 

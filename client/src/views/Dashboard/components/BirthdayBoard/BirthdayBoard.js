@@ -15,7 +15,9 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex'
 	},
 	title: {
-		fontWeight: 700
+		fontWeight: 700,
+		fontSize: '28px',
+		marginTop: '16px'
 	},
 	avatar: {
 		backgroundColor: theme.palette.primary.main,
@@ -102,6 +104,7 @@ const BirthdayBoard = props => {
 					justify="space-between"
 				>
 					<Grid item>
+						<div style={{width: '48px', height: '8px', marginTop: '26px', backgroundColor: '#ef3246'}}></div>
 						<Typography
 							className={classes.title}
 							gutterBottom

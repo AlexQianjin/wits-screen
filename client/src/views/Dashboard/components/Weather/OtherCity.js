@@ -43,9 +43,13 @@ const OtherCity = props => {
 	return (
 		<Card>
 			{weather ?
-				<CardContent>
-					<Grid item>{weather.city}</Grid>
-					<Grid container>
+				<CardContent style={{backgroundImage: 'url("./Images/img_bg_weather2.png")', backgroundRepeat: 'no-repeat'}}>
+					<Grid item>
+						<div style={{fontWeight: 'bold', fontSize: '24px'}}>
+							{weather.city}
+						</div>
+					</Grid>
+					<Grid container	>
 						<Grid
 							item
 							lg={12}
@@ -70,7 +74,10 @@ const OtherCity = props => {
 									xl={8}
 									xs={12}
 								>
-									<Typography variant="h6">{weather.data[0].tem}°C</Typography>
+									<div style={{textAlign: 'center', fontWeight: 'bold', fontSize: '60px'}}>
+										{weather.data[0].tem}
+										<span style={{fontSize: '28px', display: 'inline-block', verticalAlign: 'top'}}>°C</span>
+									</div>
 								</Grid>
 							</Grid>
 							<Grid container>
@@ -80,8 +87,14 @@ const OtherCity = props => {
 									sm={6}
 									xl={4}
 									xs={12}
+									style={{marginTop: '20px'}}
 								>
-									<Typography variant="h6">{weather.data[0].wea}</Typography>
+									<Typography
+										variant="h6"
+										style={{fontWeight: 'bold', fontSize: '30px', textAlign: 'center'}}
+									>
+										{weather.data[0].wea}
+									</Typography>
 								</Grid>
 								<Grid
 									item
@@ -93,11 +106,18 @@ const OtherCity = props => {
 									<Grid
 										container
 									>
-										<Grid item>
-											<Typography variant="h6">{weather.data[0].tem2}~{weather.data[0].tem1}°C</Typography>
+										<Grid
+											item
+											style={{marginLeft: '10px'}}
+										>
+											<Typography	variant="h6">{weather.data[0].tem2}~{weather.data[0].tem1}°C
+											</Typography>
 											<Typography variant="h6">空气质量</Typography>
 										</Grid>
-										<Grid item>
+										<Grid
+											item
+											style={{marginLeft: '10px'}}
+										>
 											<Typography variant="h6">{weather.data[0].win[0]}{weather.data[0].win_speed}</Typography>
 											<Typography variant="h6">{weather.data[0].air}{weather.data[0].air_level}</Typography>
 										</Grid>

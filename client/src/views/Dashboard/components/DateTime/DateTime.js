@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Grid } from '@material-ui/core';
 
 import Time from './Time';
 import Date from './Date';
@@ -75,7 +75,7 @@ const DateTime = props => {
 				</Grid>
 				<div
 					className={classes.difference}
-					style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")'}}
+					style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")', marginTop: '78px', marginLeft: '104px'}}
 				>
 					{/* <div
 						className={classes.title}
@@ -85,14 +85,9 @@ const DateTime = props => {
 
 					</div> */}
 					<Time />
-				</div>
-				<div>
-					<Typography
-						className={classes.title}
-						variant="h3"
-					>
+					<div>
 						<Date/>
-					</Typography>
+					</div>
 				</div>
 				<Grid
 					container

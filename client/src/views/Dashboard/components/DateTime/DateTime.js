@@ -75,15 +75,8 @@ const DateTime = props => {
 				</Grid>
 				<div
 					className={classes.difference}
-					style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")', marginTop: '78px', marginLeft: '104px'}}
+					style={{width: '553px', height: '358px', backgroundImage: 'url("./images/img_bg_time.png")', marginTop: '78px', marginLeft: '104px'}}
 				>
-					{/* <div
-						className={classes.title}
-						variant="h3"
-						style={{width: '553px', height: '358px', backgroundImage: 'url("./Images/img_bg_time.png")'}}
-					>
-
-					</div> */}
 					<Time />
 					<div>
 						<Date/>

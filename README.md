@@ -35,7 +35,7 @@ Date | Cost Hours | Summary
 11/19/2020 | 5 | Implemented weather icons
 11/19/2020 | 2 | Updated the style of the time component
 11/23/2020 | 4 | Updated the style of the weather component
-11/23/2020 | 1 | Updated the style of the weather and the daily component
+11/24/2020 | 1 | Updated the style of the weather and the daily component
 
 ## Release History
 Date | Summary

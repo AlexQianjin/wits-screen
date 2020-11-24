@@ -40,7 +40,7 @@ const Wuhan = () => {
 	return (
 		<Card>
 			{weather ?
-				<CardContent style={{backgroundImage: 'url("./Images/img_bg_weather1.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+				<CardContent style={{backgroundImage: 'url("./images/img_bg_weather1.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
 					<Grid item>
 						<div style={{fontWeight: 'bold', fontSize: '24px'}}>
 							{weather.city}

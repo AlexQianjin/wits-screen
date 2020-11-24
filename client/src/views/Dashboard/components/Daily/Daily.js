@@ -56,7 +56,7 @@ const Daily = props => {
 						</Typography>
 					</Grid>
 					<Grid item>
-						<div style={{width: '480px', height: '61px', marginTop: '30px', marginRight: '5px', backgroundImage: 'url("./Images/img_rightblock.png")'}}></div>
+						<div style={{width: '480px', height: '61px', marginTop: '30px', marginRight: '5px', backgroundImage: 'url("./images/img_rightblock.png")'}}></div>
 					</Grid>
 				</Grid>
 				<CardMedia

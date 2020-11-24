@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		fontWeight: 700,
-		fontSize: '28px',
 		marginTop: '16px'
 	},
 	avatar: {
@@ -56,6 +55,9 @@ const Daily = props => {
 							每日推荐
 						</Typography>
 					</Grid>
+					<Grid item>
+						<div style={{width: '480px', height: '61px', marginTop: '30px', marginRight: '5px', backgroundImage: 'url("./Images/img_rightblock.png")'}}></div>
+					</Grid>
 				</Grid>
 				<CardMedia
 					component="img"
@@ -63,6 +65,7 @@ const Daily = props => {
 					height="540"
 					image="./recommanded-image.png"
 					title="Contemplative Reptile"
+					style={{marginTop: '50px'}}
 				>
 				</CardMedia>
 			</CardContent>

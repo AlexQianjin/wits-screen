@@ -9,7 +9,7 @@ const DateString = () => {
 	useInterval(() => setDate(new Date()), 60 * 1000);
 
 	return (
-		<div>
+		<div style={{textAlign: 'left', fontWeight: 'bold', fontSize: '30px', marginTop: '100px'}}>
 			<Card>{date.toLocaleDateString()}</Card>
 			<Card>{['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][date.getDay()]}</Card>
 		</div>

@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		fontWeight: 700,
-		fontSize: '28px',
 		marginTop: '16px'
 	},
 	avatar: {
@@ -70,7 +69,7 @@ const Weather = props => {
 						</Typography>
 					</Grid>
 				</Grid>
-				<Grid>
+				<Grid style={{marginTop: '50px'}}>
 					<Wuhan/>
 				</Grid>
 				<Grid
@@ -85,6 +84,7 @@ const Weather = props => {
 							sm={6}
 							xl={6}
 							xs={12}
+							style={index === 0 ? {paddingRight: '10px'} : {}}
 						>
 							<OtherCity
 								city={city}

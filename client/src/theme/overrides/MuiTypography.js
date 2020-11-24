@@ -3,7 +3,8 @@ const MuiTypography = {
 		marginBottom: 8
 	},
 	h3: {
-		color: '#FFF'
+		color: '#FFF',
+		fontSize: '40px'
 	},
 	h6: {
 		color: '#FFF',

@@ -40,7 +40,7 @@ const Wuhan = () => {
 	return (
 		<Card>
 			{weather ?
-				<CardContent style={{backgroundImage: 'url("./Images/img_bg_weather1.png")', backgroundRepeat: 'no-repeat'}}>
+				<CardContent style={{backgroundImage: 'url("./Images/img_bg_weather1.png")', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
 					<Grid item>
 						<div style={{fontWeight: 'bold', fontSize: '24px'}}>
 							{weather.city}
@@ -49,7 +49,7 @@ const Wuhan = () => {
 					<Grid container>
 						<Grid
 							item
-							lg={6}
+							lg={4}
 							sm={6}
 							xl={6}
 							xs={12}
@@ -71,7 +71,7 @@ const Wuhan = () => {
 									xl={6}
 									xs={12}
 								>
-									<div style={{textAlign: 'center', fontWeight: 'bold', fontSize: '60px'}}>
+									<div style={{textAlign: 'center', fontWeight: 'bold', fontSize: '60px', marginLeft: '-65px'}}>
 										{weather.data[0].tem}
 										<span style={{fontSize: '28px', display: 'inline-block', verticalAlign: 'top'}}>°C</span>
 									</div>
@@ -88,7 +88,7 @@ const Wuhan = () => {
 								>
 									<Typography
 										variant="h6"
-										style={{fontWeight: 'bold', fontSize: '30px', textAlign: 'center'}}
+										style={{fontWeight: 'bold', fontSize: '30px', textAlign: 'center', marginLeft: '-55px'}}
 									>
 										{weather.data[0].wea}
 									</Typography>
@@ -105,7 +105,7 @@ const Wuhan = () => {
 									>
 										<Grid
 											item
-											style={{marginLeft: '10px'}}
+											style={{marginLeft: '-55px'}}
 										>
 											<Typography variant="h6">{weather.data[0].tem2}~{weather.data[0].tem1}°C</Typography>
 											<Typography variant="h6">空气质量</Typography>

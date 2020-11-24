@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		fontWeight: 700,
-		fontSize: '28px',
 		marginTop: '16px'
 	},
 	avatar: {
@@ -66,13 +65,16 @@ const BirthdayBoard = props => {
 		}
 
 		if (employees.length === 0) {
-			return '无寿星';
+			return (
+				<div style={{marginTop: '50px', fontWeight: 'bold', fontSize: '36px'}}>今日无寿星</div>
+			);
 		}
 
 		return (
 			<Grid
 				container
 				justify="space-between"
+				style={{marginTop: '50px'}}
 			>
 				{employees.map((e, index) => {
 					return (

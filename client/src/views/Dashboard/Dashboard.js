@@ -36,9 +36,9 @@ const Dashboard = () => {
 				</Grid>
 				<Grid
 					item
-					lg={4}
+					lg={2}
 					sm={6}
-					xl={4}
+					xl={2}
 					xs={12}
 				>
 					<Weather />
@@ -54,9 +54,9 @@ const Dashboard = () => {
 				</Grid>
 				<Grid
 					item
-					lg={4}
+					lg={6}
 					sm={6}
-					xl={4}
+					xl={6}
 					xs={12}
 				>
 					<Daily />

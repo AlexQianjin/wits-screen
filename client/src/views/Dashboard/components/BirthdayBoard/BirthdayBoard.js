@@ -77,6 +77,10 @@ const BirthdayBoard = props => {
 				style={{marginTop: '50px'}}
 			>
 				{employees.map((e, index) => {
+					if (index > 5) {
+						return '';
+					}
+
 					return (
 						<Grid
 							key={index}

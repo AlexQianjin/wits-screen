@@ -40,7 +40,7 @@ const Daily = props => {
 			{...rest}
 			className={clsx(classes.root, className)}
 		>
-			<CardContent>
+			<CardContent style={{paddingBottom: '0px'}}>
 				<Grid
 					container
 					justify="space-between"

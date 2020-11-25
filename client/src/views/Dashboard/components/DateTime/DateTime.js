@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1)
 	},
 	beijingTime: {
-		marginBottom: 58,
+		marginTop: 48,
 		marginLeft: 40
 	}
 }));

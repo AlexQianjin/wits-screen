@@ -87,8 +87,8 @@ const BirthdayBoard = props => {
 							item
 						>
 							<Birthday
-								name={e[0]}
-								number={e[1]}
+								name={e[1]}
+								gender={e[5]}
 								department={e[2]}
 							>
 							</Birthday>

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 
 const Birthday = props => {
-	const { name, number, department } = props;
-	let avatarPath = `./avatar/${number}.png`;
+	const { name, gender, department } = props;
+	let avatarPath = `./avatar/${gender === '男' ? 'male' : 'female'}.png`;
 	return (
-		<Card>
+		<Card style={{width: '302px', height: '121px', marginBottom: '56px', backgroundImage: 'url("./images/img_bg_people.png")'}}>
 			<CardContent>
 				<Grid container>
 					<Grid
@@ -16,10 +16,13 @@ const Birthday = props => {
 						xl={6}
 						xs={12}
 					>
-						<Avatar
-							alt="avatar"
-							src={avatarPath}
-						></Avatar>
+						<div style={{width: '67px', height: '67px', marginTop: '16px', marginLeft: '16px', backgroundImage: 'url("./images/img_peopleblock.png")', backgroundRepeat: 'no-repeat'}}>
+							<Avatar
+								alt="avatar"
+								src={avatarPath}
+								style={{width: '67px', height: '67px'}}
+							></Avatar>
+						</div>
 					</Grid>
 					<Grid
 						item
@@ -27,9 +30,20 @@ const Birthday = props => {
 						sm={12}
 						xl={6}
 						xs={12}
+						style={{marginLeft: '-30px'}}
 					>
-						<Typography variant="h6">{name}</Typography>
-						<Typography variant="h6">{department}</Typography>
+						<Typography
+							variant="h6"
+							style={{fontWeight: 'bold', fontSize: '28px', marginTop: '30px'}}
+						>
+							{name}
+						</Typography>
+						<Typography
+							variant="h6"
+							style={{fontSize: '18px', marginTop: '10px'}}
+						>
+							{department}
+						</Typography>
 					</Grid>
 				</Grid>
 			</CardContent>
@@ -39,7 +53,7 @@ const Birthday = props => {
 
 Birthday.propTypes = {
 	name: PropTypes.string,
-	number: PropTypes.string,
+	gender: PropTypes.string,
 	department: PropTypes.string
 };
 

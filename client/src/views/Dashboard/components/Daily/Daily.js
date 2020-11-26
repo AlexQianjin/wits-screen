@@ -62,7 +62,6 @@ const Daily = props => {
 				<CardMedia
 					component="img"
 					alt="Daily"
-					height="540"
 					image="./recommanded-image.png"
 					title="Daily"
 					style={{marginTop: '50px'}}

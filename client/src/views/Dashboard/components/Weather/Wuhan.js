@@ -88,7 +88,7 @@ const Wuhan = () => {
 								>
 									<Typography
 										variant="h6"
-										style={{fontWeight: 'bold', fontSize: '30px', textAlign: 'center', marginLeft: '-55px'}}
+										style={{fontWeight: 'bold', fontSize: '20px', textAlign: 'center', marginLeft: '-55px'}}
 									>
 										{weather.data[0].wea}
 									</Typography>

@@ -91,7 +91,7 @@ const OtherCity = props => {
 								>
 									<Typography
 										variant="h6"
-										style={{fontWeight: 'bold', fontSize: '30px', textAlign: 'center'}}
+										style={{fontWeight: 'bold', fontSize: '20px', textAlign: 'center'}}
 									>
 										{weather.data[0].wea}
 									</Typography>

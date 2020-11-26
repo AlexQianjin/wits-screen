@@ -61,10 +61,10 @@ const Daily = props => {
 				</Grid>
 				<CardMedia
 					component="img"
-					alt="Contemplative Reptile"
+					alt="Daily"
 					height="540"
 					image="./recommanded-image.png"
-					title="Contemplative Reptile"
+					title="Daily"
 					style={{marginTop: '50px'}}
 				>
 				</CardMedia>

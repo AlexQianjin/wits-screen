@@ -4,7 +4,7 @@ import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 
 const Birthday = props => {
 	const { name, gender, department } = props;
-	let avatarPath = `./images/${gender === '男' ? 'male' : 'female'}1.png`;
+	let avatarPath = `./images/${gender === '男' ? 'male' : 'female'}.png`;
 	return (
 		<Card style={{width: '302px', height: '121px', marginBottom: '56px', backgroundImage: 'url("./images/img_bg_people.png")'}}>
 			<CardContent>

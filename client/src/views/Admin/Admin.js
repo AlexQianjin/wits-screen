@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
-import { Daily } from './components';
+import { Daily, Employee } from './components';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -28,6 +28,15 @@ const Dashboard = () => {
 					xs={12}
 				>
 					<Daily />
+				</Grid>
+				<Grid
+					item
+					lg={2}
+					sm={6}
+					xl={2}
+					xs={12}
+				>
+					<Employee />
 				</Grid>
 			</Grid>
 		</div>

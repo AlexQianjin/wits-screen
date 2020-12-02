@@ -38,7 +38,8 @@ Date | Cost Hours | Summary
 11/24/2020 | 1 | Updated the style of the weather and the daily component
 11/25/2020 | 1 | Updated the style of the birthday component
 11/26/2020 | 1 | Updated the size of the picture in the daily component
-12/02/2020 | 4 | Implemented the uploading function of daily image
+12/02/2020 | 4 | Implemented the uploading feature of daily image
+12/02/2020 | 3 | Implemented the updating information of the employees feature
 
 ## Release History
 Date | Summary

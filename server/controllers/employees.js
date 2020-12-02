@@ -1,6 +1,8 @@
 const parse = require('csv-parse');
+const stringify = require('csv-stringify');
 const fs = require('fs');
 const path = require('path');
+const XLSX = require('xlsx');
 
 const getEmployees = (req, res) => {
     const filePath = path.join(__dirname, '../employees.csv');
@@ -25,4 +27,72 @@ const getEmployees = (req, res) => {
     });
 };
 
-module.exports = { getEmployees };
+const saveAsCSV = (req, res) => {
+    try {
+        if(!req.files) {
+            res.send({
+                status: false,
+                message: 'No file uploaded'
+            });
+        } else {
+            //Use the name of the input field (i.e. "excel") to retrieve the uploaded file
+            let excel = req.files.excel;
+            let workbook = XLSX.read(excel.data, {type:'buffer'});
+            
+            let first_sheet_name = workbook.SheetNames[0];
+            let worksheet = workbook.Sheets[first_sheet_name];
+            let i = 1;
+            let rows = [];
+            while (worksheet[`A${i}`]) {
+                let row = [];
+                let columns = ['A', 'B', 'C', 'D', 'E', 'F'];
+                columns.forEach(v => {
+                    let cell = worksheet[`${v}${i}`];
+                    if(cell) {
+                        console.log(`${v}${i}: ` + cell.v);
+                        row.push(cell.v);
+                    }
+                })
+                if(row.length === columns.length) {
+                    rows.push(row);
+                }
+                i += 1;
+            }
+
+            console.log('Total rows: ' + rows.length);
+
+            stringify(rows, (err, output) => {
+                if(err) {
+                    res.send({
+                        status: false,
+                        message: 'csv to string failed!'
+                    });
+                }
+                
+                fs.writeFile('./employees.csv', output, err => {
+                    if(err) {
+                        res.send({
+                            status: false,
+                            message: 'csv save failed!'
+                        });
+                    }
+
+                    //send response
+                    res.send({
+                        status: true,
+                        message: 'File is uploaded',
+                        data: {
+                            name: excel.name,
+                            mimetype: excel.mimetype,
+                            size: excel.size
+                        }
+                    });
+                });
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+module.exports = { getEmployees, saveAsCSV };

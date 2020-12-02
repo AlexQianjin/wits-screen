@@ -1,13 +1,20 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const fileUpload = require('express-fileupload');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var employeesRouter = require('./routes/employees');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const employeesRouter = require('./routes/employees');
+const imagesRouter = require('./routes/images');
 
-var app = express();
+const app = express();
+
+// enable files upload
+app.use(fileUpload({
+    createParentPath: true
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -18,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/employees', employeesRouter);
+app.use('/api/images', imagesRouter);
 
 app.route('*')
     .get(

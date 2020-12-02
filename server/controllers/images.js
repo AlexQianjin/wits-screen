@@ -13,7 +13,8 @@ const uploadImage = async (req, res) => {
             let image = req.files.image;
             
             //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            image.mv('./public/' + image.name);
+            // image.mv('./public/' + image.name);
+            image.mv('./public/recommanded-image.png');
 
             //send response
             res.send({

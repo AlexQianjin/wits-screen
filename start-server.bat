@@ -1,2 +1,2 @@
 cd ./server
-npm run debug
+npm run release

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=LOCAL&& nodemon ./bin/www",
+    "release": "set NODE_ENV=LOCAL&&set PORT=80&& node ./bin/www",
     "debug": "set NODE_ENV=LOCAL&&set PORT=3030&& nodemon --inspect ./bin/www"
   },
   "dependencies": {

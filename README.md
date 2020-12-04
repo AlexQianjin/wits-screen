@@ -41,6 +41,7 @@ Date | Cost Hours | Summary
 12/02/2020 | 4 | Implemented the uploading feature of daily image
 12/02/2020 | 3 | Implemented the updating information of the employees feature
 12/03/2020 | 1 | Added release script
+12/04/2020 | 1 | Deployed this build to the local server with docker in the centos
 
 ## Release History
 Date | Summary

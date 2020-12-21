@@ -10,7 +10,7 @@ const Time = () => {
 
 	return (
 		<Card style={{marginTop: '-100px'}}>
-			<div style={{fontWeight: 'bold', fontSize: '110px'}}>
+			<div style={{fontWeight: 'bold', fontSize: '110px', fontFamily: '"BigruixianBlackGBV1.0"'}}>
 				{date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false})}
 			</div>
 		</Card>

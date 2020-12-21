@@ -64,7 +64,7 @@ const Daily = props => {
 					alt="Daily"
 					image="./recommanded-image.png"
 					title="Daily"
-					style={{marginTop: '50px'}}
+					style={{marginTop: '35px'}}
 				>
 				</CardMedia>
 			</CardContent>

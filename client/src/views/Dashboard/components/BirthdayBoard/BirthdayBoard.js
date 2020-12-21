@@ -116,7 +116,7 @@ const BirthdayBoard = props => {
 							gutterBottom
 							variant="h3"
 						>
-							今日寿星
+							Happy Birthday
 						</Typography>
 					</Grid>
 				</Grid>

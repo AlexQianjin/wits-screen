@@ -29,7 +29,9 @@ const OtherCity = props => {
 			return response.json();
 		}).then(json => {
 			console.log(json);
-			setWeather(json);
+			if (json.city) {
+				setWeather(json);
+			}
 		});
 	};
 

@@ -44,7 +44,9 @@ Date | Cost Hours | Summary
 12/04/2020 | 1 | Deployed this build to the local server with docker in the centos
 12/21/2020 | 3 | Updated the UI style
 12/22/2020 | 3 | Implemented the audio auto playing and fixed the weather api
+12/23/2020 | 1 | Updated the api
 
 ## Release History
 Date | Summary
 --- | ---
+12/23/2020 | V1.0

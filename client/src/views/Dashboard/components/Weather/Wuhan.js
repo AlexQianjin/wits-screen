@@ -8,7 +8,7 @@ const Wuhan = () => {
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {
-		fetch('https://www.tianqiapi.com/api/?appid=77869124&appsecret=cHVGz6Vx&version=v6&cityid=0&city=%E6%AD%A6%E6%B1%89&ip=0&callback=0', {
+		fetch('https://www.tianqiapi.com/api/?appid=22874354&appsecret=8FAfaATy&version=v9&cityid=0&city=%E6%AD%A6%E6%B1%89&ip=0&callback=0', {
 			'headers': {
 				'accept': '*/*',
 				'accept-language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',

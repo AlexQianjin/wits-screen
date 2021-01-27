@@ -49,8 +49,8 @@ const saveAsCSV = (req, res) => {
                 columns.forEach(v => {
                     let cell = worksheet[`${v}${i}`];
                     if(cell) {
-                        console.log(`${v}${i}: ` + cell.v);
-                        row.push(cell.v);
+                        console.log(`${v}${i}: ` + cell.w);
+                        row.push(cell.w);
                     }
                 })
                 if(row.length === columns.length) {

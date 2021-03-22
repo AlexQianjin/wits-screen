@@ -6,7 +6,7 @@ import useInterval from '../../../../helpers/useInterval';
 import getWeatherIcon from '../../../../helpers/getWeatherIcon';
 
 const OtherCity = props => {
-	const url = `https://www.tianqiapi.com/api/?appid=22874354&appsecret=8FAfaATy&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
+	const url = `https://www.tianqiapi.com/api/?appid=59714691&appsecret=D9tkJuSF&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {

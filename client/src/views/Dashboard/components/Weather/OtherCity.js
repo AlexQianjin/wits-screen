@@ -4,9 +4,10 @@ import { Card, CardContent, Grid, Typography, CircularProgress } from '@material
 
 import useInterval from '../../../../helpers/useInterval';
 import getWeatherIcon from '../../../../helpers/getWeatherIcon';
+import ConstValue from '../../../../helpers/ConstValue';
 
 const OtherCity = props => {
-	const url = `https://www.tianqiapi.com/api/?appid=84999168&appsecret=8PY6lhWj&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
+	const url = `https://www.tianqiapi.com/api/?appid=${ConstValue.appId}&appsecret=${ConstValue.appSecret}&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {

@@ -3,12 +3,13 @@ import { Card, CardContent, Grid, Typography, CircularProgress } from '@material
 
 import useInterval from '../../../../helpers/useInterval';
 import getWeatherIcon from '../../../../helpers/getWeatherIcon';
+import ConstValue from '../../../../helpers/ConstValue';
 
 const Wuhan = () => {
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {
-		fetch('https://www.tianqiapi.com/api/?appid=84999168&appsecret=8PY6lhWj&version=v9&cityid=0&city=%E6%AD%A6%E6%B1%89&ip=0&callback=0', {
+		fetch(`https://www.tianqiapi.com/api/?appid=${ConstValue.appId}&appsecret=${ConstValue.appSecret}&version=v9&cityid=0&city=%E6%AD%A6%E6%B1%89&ip=0&callback=0`, {
 			'headers': {
 				'accept': '*/*',
 				'accept-language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',

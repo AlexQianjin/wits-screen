@@ -43,7 +43,6 @@ const Daily = props => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(seletedFile);
 
 		let formData = new FormData();
 		formData.append('image', seletedFile);

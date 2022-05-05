@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const employeesRouter = require('./routes/employees');
 const imagesRouter = require('./routes/images');
+const swiperImageRouter = require('./routes/swiperImages')
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/employees', employeesRouter);
 app.use('/api/images', imagesRouter);
+app.use('/api/swiperImages', swiperImageRouter);
 
 app.route('*')
     .get(

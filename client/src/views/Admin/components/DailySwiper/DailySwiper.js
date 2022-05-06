@@ -36,19 +36,46 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DailySwiper = props => {
-  const [list, setList] = useState([null])
+  const [list, setList] = useState(['']);
+  const [fileList, setFileList] = useState(['']);
   const [uploadStatus, setUploadStatus] = useState('');
-
+  let count = 0;
+  console.log(count++, list, list.length);
   const { className, ...rest } = props;
 
   const classes = useStyles();
 
-  const handleChange = e => {
+  const clearList = list => {
+    if (list) {
+      return [].filter.call(list, el => el !== null);
+    } else {
+      return [];
+    }
+  }
+
+  const handleChange = (e, idx) => {
     console.log(e);
     e.preventDefault();
-    if (e.target.value !== null) {
-      setList(list.concat([null]));
+    if (e.target.files.length !== 0) {
+      list.splice(idx, 1, e.target.files[0].name);
+      fileList.splice(idx, 1, e.target.files[0])
+      setList(clearList(list));
+      setFileList(clearList(fileList))
     }
+  }
+
+  const addFile = () => {
+    list.push('');
+    setList(clearList(list));
+    console.log(count++, list);
+  }
+
+  const cancelFile = idx => {
+    console.log(list, idx)
+    list.splice(idx, 1, null);
+    fileList.splice(idx, 1);
+    setList(clearList(list));
+    setFileList(clearList(fileList))
   }
 
   const submit = e => {
@@ -96,15 +123,32 @@ const DailySwiper = props => {
         {
           list.map((el, index) => {
             return (
-              <TextField
-                key={el}
+              <div key={index}>
+                <TextField
                 variant="standard"
                 type="file"
                 inputProps={{ accept: 'image/*' }}
-                onChange={handleChange}
-              ></TextField>);
+                  onChange={e => handleChange(e, index)}
+                  value={el}
+                >
+                </TextField>
+                <Button
+                  className={clsx(classes.btn, className)}
+                  onClick={() => cancelFile(index)}
+                >
+                  cancel
+                </Button>
+              </div>
+
+            );
           })
         }
+        <Button
+          onClick={addFile}
+          className={clsx(classes.btn, className)}
+        >
+          添加
+        </Button>
         <Button
           type="submit"
           className={clsx(classes.btn, className)}

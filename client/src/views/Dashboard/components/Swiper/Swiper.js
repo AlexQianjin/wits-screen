@@ -74,7 +74,7 @@ class Swiper extends Component {
     marginLeft = marginLeft.split('');
     marginLeft.pop();
     let startPoint = marginLeft.join('');
-    console.log("startPoint >>>>>>>>", startPoint);
+
     timer = setInterval(() => {
       startPoint -= step;
       dom.style.marginLeft = startPoint + token;

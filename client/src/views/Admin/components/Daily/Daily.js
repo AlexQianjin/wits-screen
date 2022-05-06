@@ -97,7 +97,7 @@ const Daily = props => {
 					color="primary"
 					size="large"
 				>
-                    Upload Image
+					Upload Image
 				</Button>
 			</form>
 			<Typography

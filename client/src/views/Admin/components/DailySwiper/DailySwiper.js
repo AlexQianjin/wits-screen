@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Card } from '@material-ui/core';
+import { Button, Typography, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -32,12 +32,22 @@ const useStyles = makeStyles(theme => ({
   },
   btn: {
     backgroundColor: '#eee'
+  },
+  imgList: {
+    color: '#333'
+  },
+  img: {
+    width: '130px'
+  },
+  item: {
+    display: 'flex',
+    justifyContent: 'space-around'
   }
 }));
 
 const DailySwiper = props => {
-  const [list, setList] = useState(['']);
-  const [fileList, setFileList] = useState(['']);
+  const [list, setList] = useState([]);
+  const [nameList, setNameList] = useState([]);
   const [uploadStatus, setUploadStatus] = useState('');
   let count = 0;
   console.log(count++, list, list.length);
@@ -45,37 +55,26 @@ const DailySwiper = props => {
 
   const classes = useStyles();
 
-  const clearList = list => {
-    if (list) {
-      return [].filter.call(list, el => el !== null);
-    } else {
-      return [];
-    }
+  const refreshList = list => {
+    return [].filter.call(list, el => el !== null && el !== '')
   }
 
-  const handleChange = (e, idx) => {
-    console.log(e);
+  const addFile = e => {
     e.preventDefault();
-    if (e.target.files.length !== 0) {
-      list.splice(idx, 1, e.target.files[0].name);
-      fileList.splice(idx, 1, e.target.files[0])
-      setList(clearList(list));
-      setFileList(clearList(fileList))
-    }
+    console.log(e);
+
+    list.push(e.target.files[0]);
+    nameList.push(e.target.files[0].name);
+    setList(refreshList(list));
+    setNameList(refreshList(nameList));
+    console.log(list, nameList);
   }
 
-  const addFile = () => {
-    list.push('');
-    setList(clearList(list));
-    console.log(count++, list);
-  }
-
-  const cancelFile = idx => {
-    console.log(list, idx)
-    list.splice(idx, 1, null);
-    fileList.splice(idx, 1);
-    setList(clearList(list));
-    setFileList(clearList(fileList))
+  const remove = (e, idx) => {
+    list.splice(idx, 1);
+    nameList.splice(idx, 1);
+    setList(refreshList(list));
+    setNameList(refreshList(nameList));
   }
 
   const submit = e => {
@@ -120,40 +119,37 @@ const DailySwiper = props => {
         onSubmit={submit}
         method="post"
       >
+        <p
+          className={clsx(classes.imgList, className)}
+        >已选择：</p>
         {
-          list.map((el, index) => {
+          nameList.map((el, idx) => {
             return (
-              <div key={index}>
-                <TextField
-                variant="standard"
-                type="file"
-                inputProps={{ accept: 'image/*' }}
-                  onChange={e => handleChange(e, index)}
-                  value={el}
-                >
-                </TextField>
+              <div
+                key={idx}
+                className={clsx(classes.item, className)}
+              >
+                <span
+                  className={clsx(classes.imgList, className)}
+                >{el}</span>
                 <Button
-                  className={clsx(classes.btn, className)}
-                  onClick={() => cancelFile(index)}
-                >
-                  cancel
-                </Button>
+                  onClick={e => remove(e, idx)}
+                >remove</Button>
               </div>
-
-            );
+            )
           })
         }
-        <Button
-          onClick={addFile}
+        {/* <img src="C:\\fakepath\\图 (1).png" /> */}
+        <input
+          type="file"
+          onChange={addFile}
           className={clsx(classes.btn, className)}
-        >
-          添加
-        </Button>
+        />
         <Button
           type="submit"
           className={clsx(classes.btn, className)}
         >
-          确定
+          upload all
         </Button>
       </form>
 

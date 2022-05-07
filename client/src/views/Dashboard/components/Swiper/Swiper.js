@@ -11,7 +11,16 @@ class Swiper extends Component {
     imgs: null
   }
 
+  getImage() {
+    fetch('/api/swiperImages')
+      .then(data => {
+        console.log(data.json());
+      })
+  }
+
   componentDidMount() {
+    this.getImage();
+
     this.checkState()
       .then(() => {
         this.setState({

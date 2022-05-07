@@ -1,29 +1,68 @@
 const fs = require('fs');
 const path = require('path');
+const URL = './public/swiperImages/';
+const oString = Object.prototype.toString;
+
+const isArray = target => { return oString(target) === '[object Array]' };
+
+
+const getSwiperImages = async (req, res) => {
+  fs.readFileSync(URL);
+  res.send({
+    staus: true,
+    data: {
+      msg: 'OK'
+    }
+  })
+}
+
+
+//cache image to local URL(piblic/swiperImages/)
+const writeInPic = (file) => {
+  fs.writeFile(URL + file.name, file.data, 'base64', (err) => {
+    console.log(err);
+  })
+}
+
+// empty dir
+const emptyDir = () => {
+  const folder = fs.readdirSync(URL);
+  folder.forEach(el => {
+    const filePath = `${URL}/${el}`;
+    fs.unlinkSync(filePath);
+  })
+  console.log(folder);
+}
 
 const uploadImage = async (req, res) => {
+  // console.log(req.files.image);
+
   try {
-    if (!req.files) {
+    if (!req.files.image) {
       res.send({
         status: false,
         message: 'No file uploaded'
       });
     } else {
-      //Use the name of the input field (i.e. "image") to retrieve the uploaded file
-      let image = req.files.image;
-
-      //Use the mv() method to place the file in upload directory (i.e. "uploads")
-      // image.mv('./public/' + image.name);
-      image.mv('./public/recommanded-image.png');
+      const images = req.files.image;
+      emptyDir();
+      if (!isArray(images)) {
+        writeInPic(images);
+      } else {
+        // Use the Func writeInPic cache images to local
+        images.forEach(el => {
+          writeInPic(el);
+        })
+      }
 
       //send response
       res.send({
         status: true,
         message: 'File is uploaded',
         data: {
-          name: image.name,
-          mimetype: image.mimetype,
-          size: image.size
+          name: !isArray(images) ? images.name : images.map(el => el.name),
+          mimetype: !isArray(images) ? images.mimetype : images.map(el => el.mimetype),
+          size: !isArray(images) ? images.size : images.map(el => el.size)
         }
       });
     }
@@ -32,4 +71,4 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = { uploadImage };
+module.exports = { uploadImage, getSwiperImages };

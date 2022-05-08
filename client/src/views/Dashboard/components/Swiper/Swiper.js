@@ -12,26 +12,59 @@ class Swiper extends Component {
   }
 
   getImage() {
-    fetch('/api/swiperImages')
+    fetch('/api/swiperImages', {})
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw (new Error('request swiperImage failed!'));
+        }
+      })
       .then(data => {
-        console.log(data.json());
+        console.log('swiper iamge data', data);
+        const fileList = data.data.file;
+        console.log(fileList);
+        this.setState({
+          list: data.data.file.map(el => 'data:image/png;base64,' + el),
+          imgs: document.querySelector("#imgs"),
+          time: data.data.setting_time
+        }, () => {
+          this.handleSwiper();
+          console.log(this.state);
+        })
       })
   }
 
-  componentDidMount() {
-    this.getImage();
+  handleSwiper() {
+    let list = [];
+    let len = this.state.list.length;
+    list.push(this.state.list[len - 1]);
+    list = list.concat(this.state.list);
+    list.push(this.state.list[0]);
+    this.setState({
+      swiperList: list
+    }, () => {
+      clearInterval(this.state.timer);
+      this.setState({
+        timer: null
+      }, () => {
+        this.actionSwiper();
+      })
+    })
+  }
 
+  componentDidMount() {
+    //  挂载时开启时间控制
     this.checkState()
-      .then(() => {
+        .then(() => {
         this.setState({
           imgs: document.querySelector("#imgs")
+        }, () => {
+          this.actionSwiper();
         })
-        console.log(this.state)
-        this.actionSwiper();
       });
-
-    //  挂载时开启时间控制
-  }
+    this.getImage();
+}
 
   checkState() {
     // console.log(this.state.list, this.state.time);
@@ -65,13 +98,16 @@ class Swiper extends Component {
   actionSwiper() {
     let count = 1;
     let dom = this.state.imgs;
-    setInterval(() => {
-      this.moveImg(dom, count, '%');
-      count++;
-      if (count === this.state.swiperList.length - 1) {
-        count = 1;
-      }
-    }, this.state.time);
+    this.setState(
+      {
+          timer: setInterval(() => {
+          this.moveImg(dom, count, '%');
+          count++;
+          if (count === this.state.swiperList.length - 1) {
+            count = 1;
+          }
+        }, this.state.time)
+      })
   }
 
   moveImg(dom, picIdx, token) {
@@ -100,14 +136,23 @@ class Swiper extends Component {
   render() {
     return (
       <div className={'box'}>
-        <div id="imgs" style={{ marginLeft: '0%', marginTop: '35px', width: this.state.swiperList.length * 100 + '%' }}>
+        <div
+          id="imgs"
+          style={{ marginLeft: '0%', marginTop: '35px', width: this.state.swiperList.length * 100 + '%' }}
+        >
           {
             this.state.swiperList.map((el, index) => {
-              return (<img style={{ width: 100 / this.state.swiperList.length + '%' }} key={index} src={el} alt={'pic'}></img>)
+              return (
+              <img
+                style={{ width: 100 / this.state.swiperList.length + '%' }}
+                key={index}
+                src={el}
+                alt={'pic'}
+              ></img>)
             })
           }
         </div>
-        <div className={'dots-box'}>
+        {/* <div className={'dots-box'}>
           {
             this.state.list.length > 1 ?
               <ul className={'dots'}>
@@ -118,7 +163,7 @@ class Swiper extends Component {
                 }
               </ul> : ''
           }
-        </div>
+        </div> */}
       </div>
     )
   }

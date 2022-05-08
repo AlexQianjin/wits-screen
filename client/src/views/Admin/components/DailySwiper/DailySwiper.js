@@ -48,12 +48,26 @@ const useStyles = makeStyles(theme => ({
 const DailySwiper = props => {
   const [list, setList] = useState([]);
   const [nameList, setNameList] = useState([]);
+  let [uploadTime, setUploadTime] = useState(3000);
+  let [isOpen, setOpen] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
-  let count = 0;
-  console.log(count++, list, list.length);
+  // let count = 0;
+  // console.log(count++, list, list.length);
   const { className, ...rest } = props;
 
   const classes = useStyles();
+
+  const changeTime = e => {
+    // console.log(e);
+    uploadTime = Number(e.target.value.trim());
+    setUploadTime(uploadTime);
+  }
+
+  const openSwiper = e => {
+    console.log(e);
+    isOpen = e.target.value === "true" ? true : false;
+    setOpen(isOpen);
+  }
 
   const refreshList = list => {
     return [].filter.call(list, el => el !== null && el !== '')
@@ -86,10 +100,13 @@ const DailySwiper = props => {
       formData.append('image', el);
     })
 
+    formData.append('swiperTime', uploadTime * 1000);
+    formData.append('isopen', isOpen);
+
     fetch('/api/swiperImages', { method: 'POST', body: formData })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data.status) {
           setUploadStatus('Update Successfully!');
         } else {
@@ -119,9 +136,41 @@ const DailySwiper = props => {
         onSubmit={submit}
         method="post"
       >
+        <label>
+          <p
+          className={clsx(classes.imgList, className)}
+          >滚动时间间隔（秒）:</p>
+          <input
+          onChange={changeTime}
+          ></input>
+        </label>
+        <label>
+          <p
+          className={clsx(classes.imgList, className)}
+          >是否开启滚动图片:</p>
+          <span
+          className={clsx(classes.imgList, className)}
+          >是：</span>
+          <input
+          type="radio"
+          name="open"
+          value="true"
+          onChange={openSwiper}
+          ></input>
+          <span
+          className={clsx(classes.imgList, className)}
+          >否：</span>
+          <input
+          type="radio"
+          name="open"
+          value="false"
+          // checked={isOpen}
+          onChange={openSwiper}
+          ></input>
+        </label>
         <p
           className={clsx(classes.imgList, className)}
-        >已选择：</p>
+        >已选择图片：</p>
         {
           nameList.map((el, idx) => {
             return (
@@ -139,7 +188,6 @@ const DailySwiper = props => {
             )
           })
         }
-        {/* <img src="C:\\fakepath\\图 (1).png" /> */}
         <input
           type="file"
           onChange={addFile}

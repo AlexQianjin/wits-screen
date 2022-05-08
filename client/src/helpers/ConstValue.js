@@ -1,6 +1,6 @@
 const ConstValue = {
-	appId: '97439482',
-	appSecret: 'XKAb3gex'
+	appId: '59186783',
+	appSecret: 'f0gY8qbG '
 };
 
 export default ConstValue;

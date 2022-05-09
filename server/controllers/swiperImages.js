@@ -4,21 +4,37 @@ const DIR_URL = '../public/swiperImages/';
 const PUB_URL = '../public/';
 const oString = Object.prototype.toString;
 
-let SWIPER_TIME = 3000;
-let IS_SWIPER_PIC = true;
-
 const isArray = target => { return oString(target) === '[object Array]' };
 
+// mixin two objects
+// return target object
 const mixin = (target, oObj) => {
   for (let key in oObj) {
     if (!target[key]) {
       target[key] = oObj[key];
     }
   }
-  console.log("target:", target);
   return target;
 }
 
+// format json to txt string .
+const formatJSON = (options) => {
+  let list = [];
+  for (let key in options) {
+    list.push(`${key}=${options[key]}`);
+  }
+  return list.join(';');
+}
+
+// format status.txt string to json .
+const formatTXTString = (str) => {
+  let obj = {};
+  str.split(';').forEach(el => {
+    let tmpList = el.split('=');
+    obj[tmpList[0]] = tmpList[1];
+  });
+  return obj;
+}
 
 /* 
  * read status.txt info .
@@ -26,13 +42,22 @@ const mixin = (target, oObj) => {
  */
 const readTxt = () => {
   const filePath = path.join(__dirname, PUB_URL);
-  let txt = fs.readFileSync(filePath + 'status.txt', {encoding: "utf-8"});
-  let obj = {}
-  txt.split(';').forEach(el => {
-    let tmpList = el.split('=');
-    obj[tmpList[0]] = tmpList[1];
-  });
-  return obj;
+  let obj = {};
+  try {
+    let txt = fs.readFileSync(filePath + 'status.txt', { encoding: "utf-8" });
+    obj = formatTXTString(txt);
+    return obj;
+  } catch (err) {
+    console.log(`read '${filePath}status.txt' failed, and create new status`);
+    obj = {
+      SWIPER_TIME: 5000,
+      IS_SWIPER_PIC: false
+    };
+    fs.writeFile(filePath + 'status.txt', formatJSON(obj), { encoding: 'utf-8' }, (err) => {
+      console.log(`create '${filePath}status.txt' failed`);
+    });
+    return obj;
+  }
 }
 
 // write status info into status.txt .
@@ -40,17 +65,14 @@ const writeTxt = (options) => {
   const filePath = path.join(__dirname, PUB_URL);
   let oObj = readTxt();
   options = mixin(options, oObj);
-  let list = [];
-  for (let key in options) {
-    list.push(`${key}=${options[key]}`);
-  }
-  let str = list.join(';');
-  console.log("write msg :", str);
-  fs.writeFile(filePath + 'status.txt', str, 'utf-8', (err, data) => {
+
+  let str = formatJSON(options);
+  fs.writeFile(filePath + 'status.txt', str, 'utf-8', (err) => {
     if (err) {
+      console.log("write failed!");
       return false;
     } else {
-      console.log("write success!", data);
+      console.log("write success!");
       return true;
     }
   })
@@ -58,10 +80,7 @@ const writeTxt = (options) => {
 
 // get params 'isopen' to decide openning swiper function
 const getShowSwiper = async (req, res) => {
-  const filePath = path.join(__dirname, PUB_URL);
-
   let txt = readTxt();
-  console.log("sync txt", txt);
 
   res.send({
     status: 200,
@@ -69,21 +88,43 @@ const getShowSwiper = async (req, res) => {
   })
 }
 
-// get swiper images and time info
+// response swiper images and time info
 const getSwiperImages = async (req, res) => {
   const filePath = path.join(__dirname, DIR_URL);
   let list = []
-  fs.readdir(filePath, {encoding: 'utf-8'}, (err, data) => {
+  fs.readdir(filePath, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
-      console.log(err);
-    } else {
-      list = data.map(el => 
-        {
-          console.log(filePath + el);
-          return fs.readFileSync(filePath + el, {encoding: 'base64'})
+      fs.mkdir(filePath, (err) => {
+        if (err) {
+          console.log(`create images folder failed!`);
+          res.send({
+            status: 500,
+            msg: err
+          })
+        } else {
+          list = data?.map(el => {
+            return fs.readFileSync(filePath + el, { encoding: 'base64' })
+          });
+
+          //get txt info
+          let txt = readTxt();
+
+          res.send({
+            status: true,
+            message: 'File is uploaded',
+            data: {
+              file: list,
+              setting_time: Number(txt.SWIPER_TIME),
+              is_swiper: txt.IS_SWIPER_PIC
+            },
+          })
         }
-      );
-      
+      })
+    } else {
+      list = data.map(el => {
+        return fs.readFileSync(filePath + el, { encoding: 'base64' })
+      });
+
       //get txt info
       let txt = readTxt();
 
@@ -103,7 +144,7 @@ const getSwiperImages = async (req, res) => {
 //cache image to local URL(piblic/swiperImages/)
 const writeInPic = (file) => {
   const filePath = path.join(__dirname, DIR_URL);
-  fs.writeFile(filePath + file.name, file.data, {encoding: 'base64'}, (err) => {
+  fs.writeFile(filePath + file.name, file.data, { encoding: 'base64' }, (err) => {
     console.log(err);
   })
 }
@@ -111,11 +152,16 @@ const writeInPic = (file) => {
 // empty dir
 const emptyDir = () => {
   const filePath = path.join(__dirname, DIR_URL);
-  const folder = fs.readdirSync(filePath);
-  folder.forEach(el => {
-    const fileUrl = `${filePath}/${el}`;
-    fs.unlinkSync(fileUrl);
-  })
+  try {
+    const folder = fs.readdirSync(filePath);
+    folder.forEach(el => {
+      const fileUrl = `${filePath}/${el}`;
+      fs.unlinkSync(fileUrl);
+    })
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 }
 
 const uploadImage = async (req, res) => {
@@ -129,16 +175,16 @@ const uploadImage = async (req, res) => {
       let images = req.files.image;
       writeTxt(
         {
-          SWIPER_TIME:req.body.swiperTime,
-          IS_SWIPER_PIC:req.body.isopen
-      });
+          SWIPER_TIME: req.body.swiperTime,
+          IS_SWIPER_PIC: req.body.isopen
+        });
       console.log(req.body.swiperTime, req.body.isopen);
       emptyDir();
       if (!images.length) {
         writeInPic(images);
       } else {
         // Use the Func writeInPic cache images to local
-        for (let i = 0 ; i < images.length; i ++) {
+        for (let i = 0; i < images.length; i++) {
           let el = images[i];
           writeInPic(el);
         }

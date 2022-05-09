@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 const DailySwiper = props => {
   const [list, setList] = useState([]);
   const [nameList, setNameList] = useState([]);
-  let [uploadTime, setUploadTime] = useState(3000);
+  let [uploadTime, setUploadTime] = useState(3);
   let [isOpen, setOpen] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
   // let count = 0;
@@ -63,22 +63,21 @@ const DailySwiper = props => {
     setUploadTime(uploadTime);
   }
 
-  const openSwiper = e => {
-    console.log(e);
-    isOpen = e.target.value === "true" ? true : false;
-    setOpen(isOpen);
-  }
-
   const refreshList = list => {
     return [].filter.call(list, el => el !== null && el !== '')
   }
 
   const addFile = e => {
     e.preventDefault();
-    console.log(e);
 
-    list.push(e.target.files[0]);
-    nameList.push(e.target.files[0].name);
+    let files = e.target.files;
+    console.log(e, files);
+    for (let key in files) {
+      if (files[key] instanceof File) {
+        list.push(files[key]);
+        nameList.push(files[key].name);
+      }
+    }
     setList(refreshList(list));
     setNameList(refreshList(nameList));
     console.log(list, nameList);
@@ -141,8 +140,9 @@ const DailySwiper = props => {
           className={clsx(classes.imgList, className)}
           >滚动时间间隔（秒）:</p>
           <input
-          onChange={changeTime}
-          ></input>
+            onChange={changeTime}
+            value={uploadTime}
+          />
         </label>
         <label>
           <p
@@ -152,21 +152,22 @@ const DailySwiper = props => {
           className={clsx(classes.imgList, className)}
           >是：</span>
           <input
-          type="radio"
-          name="open"
-          value="true"
-          onChange={openSwiper}
-          ></input>
+            type="radio"
+            name="open"
+            value="true"
+            checked={isOpen}
+            onChange={() => { setOpen(true) }}
+          />
           <span
           className={clsx(classes.imgList, className)}
           >否：</span>
           <input
-          type="radio"
-          name="open"
-          value="false"
-          // checked={isOpen}
-          onChange={openSwiper}
-          ></input>
+            type="radio"
+            name="open"
+            value="false"
+            checked={!isOpen}
+            onChange={() => { setOpen(false) }}
+          />
         </label>
         <p
           className={clsx(classes.imgList, className)}
@@ -190,6 +191,7 @@ const DailySwiper = props => {
         }
         <input
           type="file"
+          multiple
           onChange={addFile}
           className={clsx(classes.btn, className)}
         />

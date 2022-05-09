@@ -97,9 +97,15 @@ const getSwiperImages = async (req, res) => {
       fs.mkdir(filePath, (err) => {
         if (err) {
           console.log(`create images folder failed!`);
+          let txt = readTxt();
           res.send({
             status: 500,
-            msg: err
+            msg: err,
+            data: {
+              file: [],
+              setting_time: Number(txt.SWIPER_TIME),
+              is_swiper: txt.IS_SWIPER_PIC
+            }
           })
         } else {
           list = data?.map(el => {
@@ -142,11 +148,48 @@ const getSwiperImages = async (req, res) => {
 }
 
 //cache image to local URL(piblic/swiperImages/)
-const writeInPic = (file) => {
+const writeInPic = (files) => {
   const filePath = path.join(__dirname, DIR_URL);
-  fs.writeFile(filePath + file.name, file.data, { encoding: 'base64' }, (err) => {
-    console.log(err);
-  })
+
+  if (!files.length) {
+    fs.readdir(filePath, (err) => {
+      if (!err) {
+        fs.writeFile(filePath + files.name, files.data, { encoding: 'base64' }, (err) => {
+          console.log(err);
+        })
+      } else {
+        fs.mkdir(filePath, (err) => {
+          if (!err) {
+            fs.writeFile(filePath + files.name, files.data, { encoding: 'base64' }, (err) => {
+              console.log(err);
+            })
+          }
+        })
+      }
+    })
+  } else {
+    fs.readdir(filePath, (err) => {
+      if (!err) {
+        for (let i = 0; i < files.length; i++) {
+          let el = files[i];
+          fs.writeFile(filePath + el.name, el.data, { encoding: 'base64' }, (err) => {
+            console.log(err);
+          })
+        }
+      } else {
+        fs.mkdir(filePath, (err) => {
+          if (!err) {
+            for (let i = 0; i < files.length; i++) {
+              let el = files[i];
+              fs.writeFile(filePath + el.name, el.data, { encoding: 'base64' }, (err) => {
+                console.log(err);
+              })
+            }
+          }
+        })
+      }
+    })
+  }
 }
 
 // empty dir
@@ -180,15 +223,9 @@ const uploadImage = async (req, res) => {
         });
       console.log(req.body.swiperTime, req.body.isopen);
       emptyDir();
-      if (!images.length) {
-        writeInPic(images);
-      } else {
-        // Use the Func writeInPic cache images to local
-        for (let i = 0; i < images.length; i++) {
-          let el = images[i];
-          writeInPic(el);
-        }
-      }
+
+      // Use the Func writeInPic cache images to local
+      writeInPic(images);
 
       //send response
       res.send({

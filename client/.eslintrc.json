@@ -21,18 +21,23 @@
     ],
     "rules": {
         "indent": [
+            0,
             "error",
             "tab"
         ],
         "linebreak-style": [
+            0,
             "error",
             "unix"
+            // "windows"
         ],
         "quotes": [
+            0,
             "error",
             "single"
         ],
         "semi": [
+            0,
             "error",
             "always"
         ],

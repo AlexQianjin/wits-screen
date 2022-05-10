@@ -1,0 +1,38 @@
+.box {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* .box>div {
+  width: 300%;
+} */
+
+.box>div>img {
+  width: 100%;
+}
+
+.dots-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.dots {
+  margin-top: -40px;
+  float: left;
+}
+
+.dots>li {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 15px;
+  border-radius: 50%;
+  background-color: #3338;
+  bottom: 30px;
+}
+
+.active {
+  background-color: #fff8;
+}

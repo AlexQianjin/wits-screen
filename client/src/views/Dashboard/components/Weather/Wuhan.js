@@ -37,6 +37,7 @@ const Wuhan = () => {
 
 	useEffect(() => {
 		getWeather();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useInterval(getWeather, 60 * 60 * 1000);

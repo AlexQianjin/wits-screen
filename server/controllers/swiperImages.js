@@ -93,40 +93,6 @@ const getSwiperImages = async (req, res) => {
   const filePath = path.join(__dirname, DIR_URL);
   let list = []
 
-  // let data = fs.readdirSync(filePath, { encoding: 'utf-8' });
-
-  // console.log(data);
-  // if (data.length > 0) {
-  //   list = data.map(el => {
-  //     console.log(el);
-  //     return fs.readFileSync(filePath + el, { encoding: 'base64' })
-  //   });
-
-  //   //get txt info
-  //   let txt = readTxt();
-
-  //   res.send({
-  //     status: true,
-  //     message: 'File is uploaded',
-  //     data: {
-  //       file: list,
-  //       setting_time: Number(txt.SWIPER_TIME),
-  //       is_swiper: txt.IS_SWIPER_PIC
-  //     },
-  //   })
-  // } else {
-  //   res.send({
-  //     status: 500,
-  //     msg: err,
-  //     data: {
-  //       file: [],
-  //       setting_time: Number(txt.SWIPER_TIME),
-  //       is_swiper: txt.IS_SWIPER_PIC
-  //     }
-  //   })
-  // }
-
-
   fs.readdir(filePath, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
       fs.mkdir(filePath, (err) => {
@@ -143,6 +109,10 @@ const getSwiperImages = async (req, res) => {
             }
           })
         } else {
+          data.sort((a, b) => {
+            let x = a.split('.')[0], y = b.split('.')[0];
+            return Number(reg.exec(x)) - Number(reg.exec(y));
+          })
           list = data?.map(el => {
             console.log(el);
             return fs.readFileSync(filePath + el, { encoding: 'base64' })
@@ -164,14 +134,11 @@ const getSwiperImages = async (req, res) => {
       })
     } else {
       const reg = /[0-9]*$/g;
-      console.log(data);
       data.sort((a, b) => {
         let x = a.split('.')[0], y = b.split('.')[0];
-        console.log(reg.exec(x), reg.exec(y));
-        return Number(reg.exec(a)[0]) - Number(reg.exec(b)[0]);
+        return Number(reg.exec(x)) - Number(reg.exec(y));
       })
       list = data.map(el => {
-        console.log(el);
         return fs.readFileSync(filePath + el, { encoding: 'base64' })
       });
 
@@ -190,6 +157,8 @@ const getSwiperImages = async (req, res) => {
     }
   });
 }
+
+
 
 //cache image to local URL(piblic/swiperImages/)
 const writeInPic = (files) => {

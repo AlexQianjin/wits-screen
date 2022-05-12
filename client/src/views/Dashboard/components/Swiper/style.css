@@ -12,27 +12,16 @@
   width: 100%;
 }
 
-.dots-box {
+.ud-box {
+  width: 1380px;
+  height: 380px;
+}
+
+/* .ud-sub-box {
+  width: 380px; 
+} */
+
+.ud-sub-box>imgs {
   width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.dots {
-  margin-top: -40px;
-  float: left;
-}
-
-.dots>li {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin: 0 15px;
-  border-radius: 50%;
-  background-color: #3338;
-  bottom: 30px;
-}
-
-.active {
-  background-color: #fff8;
+  width: 380px;
 }

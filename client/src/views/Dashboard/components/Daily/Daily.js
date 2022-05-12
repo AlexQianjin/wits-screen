@@ -36,17 +36,29 @@ const Daily = props => {
 	const { className, ...rest } = props;
 	let [singlePic, setSinglePic] = useState("./recommanded-image.png");
 	let [isSwiper, setIsSwiper] = useState();
+	let [rollPicType, setRollPicType] = useState('leftright');
 	const classes = useStyles();
 
 	useEffect(() => {
 		fetch('/api/swiperImages/isopen', {})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data);
+				console.log("isopen:", data);
 				if (data.status === 200) {
 					setIsSwiper(data.isopen ? true : false);
 				} else {
 					setIsSwiper(false);
+				}
+			});
+
+		fetch('/api/swiperImages/getRollPicType', {})
+			.then(res => res.json())
+			.then(data => {
+				if (data.status === 200) {
+					setRollPicType(data.roll_pic_type);
+				} else {
+					console.log("roll type err");
+					setRollPicType('leftright');
 				}
 			});
 
@@ -86,7 +98,7 @@ const Daily = props => {
 				</Grid>
 				{
 					isSwiper ?
-					<Swiper></Swiper> :
+						<Swiper type={rollPicType}></Swiper> :
 					<CardMedia
 						component="img"
 						alt="Daily"

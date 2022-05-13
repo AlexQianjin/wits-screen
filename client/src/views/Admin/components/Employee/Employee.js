@@ -37,7 +37,6 @@ const Employee = props => {
 	const [uploadStatus, setUploadStatus] = useState('');
 
 	const handleFileUpload = e => {
-		console.log(e.target.files[0]);
 		setSeletedFile(e.target.files[0]);
 	};
 
@@ -50,7 +49,6 @@ const Employee = props => {
 		fetch('/api/employees', {method: 'POST', body: formData})
 			.then(response => response.json())
 			.then(data => {
-				console.log(data);
 				if (data.status) {
 					setUploadStatus('Update Successfully!');
 				} else {

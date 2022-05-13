@@ -88,10 +88,21 @@ const getShowSwiper = async (req, res) => {
   })
 }
 
+// get params 'isopen' to decide openning swiper function
+const getRollPicType = async (req, res) => {
+  let txt = readTxt();
+  console.log(txt);
+  res.send(JSON.stringify({
+    status: 200,
+    rollpictype: txt.ROLL_PIC_TYPE
+  }))
+}
+
 // response swiper images and time info
 const getSwiperImages = async (req, res) => {
   const filePath = path.join(__dirname, DIR_URL);
   let list = []
+
   fs.readdir(filePath, { encoding: 'utf-8' }, (err, data) => {
     if (err) {
       fs.mkdir(filePath, (err) => {
@@ -104,10 +115,15 @@ const getSwiperImages = async (req, res) => {
             data: {
               file: [],
               setting_time: Number(txt.SWIPER_TIME),
-              is_swiper: txt.IS_SWIPER_PIC
+              is_swiper: txt.IS_SWIPER_PIC,
+              roll_pic_type: txt.ROLL_PIC_TYPE
             }
           })
         } else {
+          data?.sort((a, b) => {
+            let x = a.split('.')[0], y = b.split('.')[0];
+            return Number(reg.exec(x)) - Number(reg.exec(y));
+          })
           list = data?.map(el => {
             return fs.readFileSync(filePath + el, { encoding: 'base64' })
           });
@@ -121,12 +137,18 @@ const getSwiperImages = async (req, res) => {
             data: {
               file: list,
               setting_time: Number(txt.SWIPER_TIME),
-              is_swiper: txt.IS_SWIPER_PIC
+              is_swiper: txt.IS_SWIPER_PIC,
+              roll_pic_type: txt.ROLL_PIC_TYPE
             },
           })
         }
       })
     } else {
+      const reg = /[0-9]*$/g;
+      data.sort((a, b) => {
+        let x = a.split('.')[0], y = b.split('.')[0];
+        return Number(reg.exec(x)) - Number(reg.exec(y));
+      })
       list = data.map(el => {
         return fs.readFileSync(filePath + el, { encoding: 'base64' })
       });
@@ -140,12 +162,15 @@ const getSwiperImages = async (req, res) => {
         data: {
           file: list,
           setting_time: Number(txt.SWIPER_TIME),
-          is_swiper: txt.IS_SWIPER_PIC
+          is_swiper: txt.IS_SWIPER_PIC,
+          roll_pic_type: txt.ROLL_PIC_TYPE
         },
       })
     }
   });
 }
+
+
 
 //cache image to local URL(piblic/swiperImages/)
 const writeInPic = (files) => {
@@ -219,7 +244,8 @@ const uploadImage = async (req, res) => {
       writeTxt(
         {
           SWIPER_TIME: req.body.swiperTime,
-          IS_SWIPER_PIC: req.body.isopen
+          IS_SWIPER_PIC: req.body.isopen,
+          ROLL_PIC_TYPE: req.body.rollPicType
         });
       console.log(req.body.swiperTime, req.body.isopen);
       emptyDir();
@@ -243,4 +269,4 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = { uploadImage, getSwiperImages, getShowSwiper };
+module.exports = { uploadImage, getSwiperImages, getShowSwiper, getRollPicType };

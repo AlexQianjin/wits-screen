@@ -7,4 +7,5 @@ var imagesController = require('../controllers/swiperImages');
 router.post('/', imagesController.uploadImage);
 router.get('/', imagesController.getSwiperImages);
 router.get('/isopen', imagesController.getShowSwiper);
+router.get('/getRollPicType', imagesController.getRollPicType);
 module.exports = router;

@@ -73,7 +73,7 @@ const BirthdayBoard = props => {
 		return (
 			<Grid
 				container
-				justify="space-between"
+				justifyContent="space-between"
 				style={{marginTop: '50px'}}
 			>
 				{employees.map((e, index) => {
@@ -107,7 +107,7 @@ const BirthdayBoard = props => {
 			<CardContent>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					<Grid item>
 						<div style={{width: '48px', height: '8px', marginTop: '26px', backgroundColor: '#ef3246'}}></div>

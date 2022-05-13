@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 // import _throttle from 'helpers/common';
 import './style.css';
 class Swiper extends Component {
+  constructor(props) {
+    super(props);
+    console.log("props:", this.props);
+  }
+
   state = {
     list: [],
     time: 3000,
     timer: null,
     swiperList: [],
     activeIndex: 1,
-    imgs: null
+    imgs: null,
+    type: 'leftright'
   }
 
   getImage() {
@@ -21,16 +27,13 @@ class Swiper extends Component {
         }
       })
       .then(data => {
-        console.log('swiper iamge data', data);
-        const fileList = data.data.file;
-        console.log(fileList);
+        data = data.data;
         this.setState({
-          list: data.data.file.map(el => 'data:image/png;base64,' + el),
+          list: data.file.map(el => 'data:image/png;base64,' + el),
           imgs: document.querySelector("#imgs"),
-          time: data.data.setting_time
+          time: data.setting_time
         }, () => {
           this.handleSwiper();
-          console.log(this.state);
         })
       })
   }
@@ -54,6 +57,7 @@ class Swiper extends Component {
   }
 
   componentDidMount() {
+    // console.log("props:", this.props);
     //  挂载时开启时间控制
     this.checkState()
         .then(() => {
@@ -67,7 +71,6 @@ class Swiper extends Component {
 }
 
   checkState() {
-    // console.log(this.state.list, this.state.time);
     return this.testImgList().then(() => {
       let list = [];
       let len = this.state.list.length;
@@ -78,7 +81,6 @@ class Swiper extends Component {
       this.setState({
         swiperList: list
       })
-      console.log(this.state);
     });
   }
 
@@ -98,10 +100,14 @@ class Swiper extends Component {
   actionSwiper() {
     let count = 1;
     let dom = this.state.imgs;
+    let type = 'leftright'
+    // if (this.state.type !== 'leftright') {
+    //   type = 'updown';
+    // }
     this.setState(
       {
           timer: setInterval(() => {
-          this.moveImg(dom, count, '%');
+            this.moveImg(dom, type, count, '%');
           count++;
           if (count === this.state.swiperList.length - 1) {
             count = 1;
@@ -110,62 +116,99 @@ class Swiper extends Component {
       })
   }
 
-  moveImg(dom, picIdx, token) {
-    let distance = 100;
-    let step = distance / 60;
-    let count = 0;
-    let timer = null;
-    let marginLeft = dom.style.marginLeft;
-    marginLeft = marginLeft.split('');
-    marginLeft.pop();
-    let startPoint = marginLeft.join('');
+  moveImg(dom, type, picIdx, token) {
+    // if (type === 'leftright') {
+      let distance = 100;
+      let step = distance / 60;
+      let count = 0;
+      let timer = null;
+      let marginLeft = dom.style.marginLeft;
+      marginLeft = marginLeft.split('');
+      marginLeft.pop();
+      let startPoint = marginLeft.join('');
 
-    timer = setInterval(() => {
-      startPoint -= step;
-      dom.style.marginLeft = startPoint + token;
-      count++;
-      if (count >= 60) {
-        clearInterval(timer);
-        if (picIdx === 1) {
-          dom.style.marginLeft = '-100%';
+      timer = setInterval(() => {
+        startPoint -= step;
+        dom.style.marginLeft = startPoint + token;
+        count++;
+        if (count >= 60) {
+          clearInterval(timer);
+          if (picIdx === 1) {
+            dom.style.marginLeft = '-100%';
+          }
         }
-      }
-    }, 10)
+      }, 10)
+    // } else {
+    //   let distance = 380;
+    //   let step = distance / 60;
+    //   let count = 0;
+    //   let marginTop = dom.style.marginLeft;
+    //   marginTop = marginTop.split('');
+    //   marginTop.pop();
+    //   marginTop.pop();
+    //   let startPoint = marginTop.join('');
+    //   let startTag = startPoint;
+    //   let timer = null;
+    //   timer = setInterval(() => {
+    //     startPoint -= step;
+    //     dom.style.marginTop = startPoint + token;
+    //     count++;
+    //     if (count >= 60) {
+    //       dom.style.marginTop = -(Number(startTag) + 380) + 'px';
+    //       clearInterval(timer);
+    //       if (picIdx === 1) {
+    //         dom.style.marginTop = '-380px';
+    //       }
+    //     }
+    //   }, 10)
+    // }
   }
 
   render() {
-    return (
-      <div className={'box'}>
-        <div
-          id="imgs"
-          style={{ marginLeft: '0%', marginTop: '35px', width: this.state.swiperList.length * 100 + '%' }}
-        >
-          {
-            this.state.swiperList.map((el, index) => {
-              return (
-              <img
-                style={{ width: 100 / this.state.swiperList.length + '%' }}
-                key={index}
-                src={el}
-                alt={'pic'}
-              ></img>)
-            })
-          }
+    // if (this.props === 'updown') {
+      // return (
+      //   <div className={'ud-box'}>
+      //     <div
+      //       className={'ud-sub-box'}
+      //       id="imgs"
+      //       style={{ marginTop: '0', height: this.state.swiperList.length * 380 + 'px' }}
+      //     >
+      //       {
+      //         this.state.swiperList.map((el, index) => {
+      //           return (
+      //             <img
+      //               style={{ height: '380px' }}
+      //               key={index}
+      //               src={el}
+      //               alt={'pic'}
+      //             ></img>)
+      //         })
+      //       }
+      //     </div>
+      //   </div>
+      // )
+    // } else {
+      return (
+        <div className={'box'}>
+          <div
+            id="imgs"
+            style={{ marginLeft: '0%', marginTop: '35px', width: this.state.swiperList.length * 100 + '%' }}
+          >
+            {
+              this.state.swiperList.map((el, index) => {
+                return (
+                  <img
+                    style={{ width: 100 / this.state.swiperList.length + '%' }}
+                    key={index}
+                    src={el}
+                    alt={'pic'}
+                  ></img>)
+              })
+            }
+          </div>
         </div>
-        {/* <div className={'dots-box'}>
-          {
-            this.state.list.length > 1 ?
-              <ul className={'dots'}>
-                {
-                  this.state.list.map((el, index) => {
-                    return <li key={index}></li>
-                  })
-                }
-              </ul> : ''
-          }
-        </div> */}
-      </div>
-    )
+      )
+    // }
   }
 }
 

@@ -1,6 +1,27 @@
 const fs = require('fs');
 const path = require('path');
 
+const getImage = async (req, res) => {
+    try {
+        let filePath = './public/recommanded-image.png';
+        fs.readFile(filePath, { encoding: 'base64' }, (err, file) => {
+            if (!err) {
+                res.send({
+                    status: 200,
+                    data: {
+                        file
+                    }
+                })
+            } else {
+                res.status(500).send(err);
+            }
+        })
+    } catch (err) {
+        res.status(500).send(err);
+    }
+}
+
+
 const uploadImage = async (req, res) => {
     try {
         if(!req.files) {
@@ -32,4 +53,4 @@ const uploadImage = async (req, res) => {
     }
 };
 
-module.exports = { uploadImage };
+module.exports = { uploadImage, getImage };

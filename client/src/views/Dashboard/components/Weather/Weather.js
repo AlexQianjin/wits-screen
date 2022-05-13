@@ -56,7 +56,7 @@ const Weather = props => {
 			<CardContent>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					<Grid item>
 						<div style={{width: '48px', height: '8px', marginTop: '26px', backgroundColor: '#ef3246'}}></div>
@@ -74,7 +74,7 @@ const Weather = props => {
 				</Grid>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					{cities.map((city, index) => {return (
 						<Grid

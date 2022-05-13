@@ -42,6 +42,10 @@ const useStyles = makeStyles(theme => ({
   item: {
     display: 'flex',
     justifyContent: 'space-around'
+  },
+  subtitle: {
+    fontWeight: '700',
+    color: '#000'
   }
 }));
 
@@ -49,16 +53,15 @@ const DailySwiper = props => {
   const [list, setList] = useState([]);
   const [nameList, setNameList] = useState([]);
   let [uploadTime, setUploadTime] = useState(3);
-  let [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+  // const [rollPicType, setRollPicType] = useState('updown')
   const [uploadStatus, setUploadStatus] = useState('');
-  // let count = 0;
-  // console.log(count++, list, list.length);
+
   const { className, ...rest } = props;
 
   const classes = useStyles();
 
   const changeTime = e => {
-    // console.log(e);
     uploadTime = Number(e.target.value.trim());
     setUploadTime(uploadTime);
   }
@@ -71,7 +74,7 @@ const DailySwiper = props => {
     e.preventDefault();
 
     let files = e.target.files;
-    console.log(e, files);
+
     for (let key in files) {
       if (files[key] instanceof File) {
         list.push(files[key]);
@@ -80,7 +83,6 @@ const DailySwiper = props => {
     }
     setList(refreshList(list));
     setNameList(refreshList(nameList));
-    console.log(list, nameList);
   }
 
   const remove = (e, idx) => {
@@ -101,11 +103,11 @@ const DailySwiper = props => {
 
     formData.append('swiperTime', uploadTime * 1000);
     formData.append('isopen', isOpen);
+    // formData.append('rollPicType', rollPicType);
 
     fetch('/api/swiperImages', { method: 'POST', body: formData })
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
         if (data.status) {
           setUploadStatus('Update Successfully!');
         } else {
@@ -137,7 +139,7 @@ const DailySwiper = props => {
       >
         <label>
           <p
-          className={clsx(classes.imgList, className)}
+            className={clsx(classes.subtitle, className)}
           >滚动时间间隔（秒）:</p>
           <input
             onChange={changeTime}
@@ -146,7 +148,7 @@ const DailySwiper = props => {
         </label>
         <label>
           <p
-          className={clsx(classes.imgList, className)}
+            className={clsx(classes.subtitle, className)}
           >是否开启滚动图片:</p>
           <span
           className={clsx(classes.imgList, className)}
@@ -169,8 +171,33 @@ const DailySwiper = props => {
             onChange={() => { setOpen(false) }}
           />
         </label>
+        {/* <label>
+          <p
+            className={clsx(classes.subtitle, className)}
+          >滚动方式:</p>
+          <span
+            className={clsx(classes.imgList, className)}
+          >左右滚动：</span>
+          <input
+            type="radio"
+            name="rollPicType"
+            value="leftright"
+            checked={rollPicType === 'leftright'}
+            onChange={() => { setRollPicType('leftright') }}
+          />
+          <span
+            className={clsx(classes.imgList, className)}
+          >上下滚动：</span>
+          <input
+            type="radio"
+            name="rollPicType"
+            value="updown"
+            checked={rollPicType === "updown"}
+            onChange={() => { setRollPicType('updown') }}
+          />
+        </label> */}
         <p
-          className={clsx(classes.imgList, className)}
+          className={clsx(classes.subtitle, className)}
         >已选择图片：</p>
         {
           nameList.map((el, idx) => {
@@ -209,6 +236,14 @@ const DailySwiper = props => {
         variant="h6"
       >
         {uploadStatus}
+      </Typography>
+
+      <Typography
+        className={classes.title}
+        gutterBottom
+        variant="h6"
+      >
+        当前状态
       </Typography>
     </Card>
   )

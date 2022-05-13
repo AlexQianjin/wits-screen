@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Card, CardContent, CardMedia, Grid, Typography} from '@material-ui/core';
+import { Card, CardContent, Grid, Typography, CardMedia } from '@material-ui/core';
+import Swiper from './../Swiper/Swiper.js';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -33,20 +34,56 @@ const useStyles = makeStyles(theme => ({
 
 const Daily = props => {
 	const { className, ...rest } = props;
-
+	let [singlePic, setSinglePic] = useState("./recommanded-image.png");
+	let [isSwiper, setIsSwiper] = useState();
+	// let [rollPicType, setRollPicType] = useState('leftright');
 	const classes = useStyles();
+
+	useEffect(() => {
+		fetch('/api/swiperImages/isopen', {})
+			.then(res => res.json())
+			.then(data => {
+				console.log("isopen:", data);
+				if (data.status === 200) {
+					setIsSwiper(data.isopen ? true : false);
+				} else {
+					setIsSwiper(false);
+				}
+			});
+
+		// fetch('/api/swiperImages/getRollPicType', {})
+		// 	.then(res => res.json())
+		// 	.then(data => {
+		// 		if (data.status === 200) {
+		// 			setRollPicType(data.roll_pic_type);
+		// 		} else {
+		// 			console.log("roll type err");
+		// 			setRollPicType('leftright');
+		// 		}
+		// 	});
+
+		fetch('/api/images', {})
+			.then(res => res.json())
+			.then(data => {
+				console.log('imagedata:', data);
+				data = data.data;
+				setSinglePic('data:image/png;base64,' + data.file)
+		})
+		// setIsSwiper(true);
+	}, [])
+
 	return (
 		<Card
 			{...rest}
 			className={clsx(classes.root, className)}
 		>
-			<CardContent style={{paddingBottom: '0px'}}>
+			<CardContent style={{ paddingBottom: '0px' }}>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					<Grid item>
-						<div style={{width: '48px', height: '8px', marginTop: '26px', backgroundColor: '#ef3246'}}></div>
+						<div style={{ width: '48px', height: '8px', marginTop: '26px', backgroundColor: '#ef3246' }}></div>
 						<Typography
 							className={classes.title}
 							gutterBottom
@@ -56,17 +93,22 @@ const Daily = props => {
 						</Typography>
 					</Grid>
 					<Grid item>
-						<div style={{width: '480px', height: '61px', marginTop: '30px', marginRight: '5px', backgroundImage: 'url("./images/img_rightblock.png")'}}></div>
+						<div style={{ width: '480px', height: '61px', marginTop: '30px', marginRight: '5px', backgroundImage: 'url("./images/img_rightblock.png")' }}></div>
 					</Grid>
 				</Grid>
-				<CardMedia
-					component="img"
-					alt="Daily"
-					image="./recommanded-image.png"
-					title="Daily"
-					style={{marginTop: '35px'}}
-				>
-				</CardMedia>
+				{
+					// type={rollPicType}
+					isSwiper ?
+						<Swiper></Swiper> :
+					<CardMedia
+						component="img"
+						alt="Daily"
+							image={singlePic}
+						title="Daily"
+						style={{ marginTop: '35px' }}
+					>
+					</CardMedia>
+				}
 			</CardContent>
 		</Card>
 	);

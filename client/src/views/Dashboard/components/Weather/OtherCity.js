@@ -7,7 +7,7 @@ import getWeatherIcon from '../../../../helpers/getWeatherIcon';
 import ConstValue from '../../../../helpers/ConstValue';
 
 const OtherCity = props => {
-	const url = `https://www.tianqiapi.com/api/?appid=${ConstValue.appId}&appsecret=${ConstValue.appSecret}&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
+	const url = `https://www.yiketianqi.com/api/?appid=${ConstValue.appId}&appsecret=${ConstValue.appSecret}&version=v9&cityid=0&city=${encodeURI(props.city)}&ip=0&callback=0`;
 	const [weather, setWeather] = useState(null);
 
 	const getWeather = () => {

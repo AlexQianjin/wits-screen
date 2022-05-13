@@ -61,7 +61,7 @@ const DateTime = props => {
 			<CardContent style={{padding: 0}}>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					<Grid item>
 						<CardMedia
@@ -84,7 +84,7 @@ const DateTime = props => {
 				</div>
 				<Grid
 					container
-					justify="space-between"
+					justifyContent="space-between"
 				>
 					<Grid item>
 						<CardMedia

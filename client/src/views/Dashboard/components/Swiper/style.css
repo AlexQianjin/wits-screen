@@ -1,0 +1,27 @@
+.box {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* .box>div {
+  width: 300%;
+} */
+
+.box>div>img {
+  width: 100%;
+}
+
+.ud-box {
+  width: 1380px;
+  height: 380px;
+}
+
+.ud-sub-box {
+  width: 380px; 
+}
+
+.ud-sub-box>img {
+  width: 100%;
+  width: 380px;
+}

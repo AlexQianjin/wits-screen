@@ -45,8 +45,16 @@ Date | Cost Hours | Summary
 12/21/2020 | 3 | Updated the UI style
 12/22/2020 | 3 | Implemented the audio auto playing and fixed the weather api
 12/23/2020 | 1 | Updated the api
+05/01/2022 | 3 | Finish front-end 'Swiper Image' function
+05/02/2022 | 3 | Start to do '/client' Admin/DailySwiper.js for managing swiper-images
+05/03/2022 | 3 | Finish Admin/DailySwiper.js
+05/05/2022 | 1 | Start to do back-end jobs, and add route for swiperImages
+05/06/2022 | 3 | Finish 'uploadImages' & 'getSwiperImages' function in swiperImages
+05/08/2022 | 8 | Finish file operation for swiperImages and advance api of front-end and back-end
+05/09/2022 | 3 | Fixed some BUG of swiperImages.js and DailySwiper.js 
 
 ## Release History
 Date | Summary
 --- | ---
 12/23/2020 | V1.0
+05/09/2022 | V2.0

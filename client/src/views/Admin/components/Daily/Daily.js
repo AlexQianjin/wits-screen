@@ -43,7 +43,6 @@ const Daily = props => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		console.log(seletedFile);
 
 		let formData = new FormData();
 		formData.append('image', seletedFile);
@@ -98,7 +97,7 @@ const Daily = props => {
 					color="primary"
 					size="large"
 				>
-                    Upload Image
+					Upload Image
 				</Button>
 			</form>
 			<Typography

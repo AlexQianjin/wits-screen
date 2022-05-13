@@ -5,9 +5,6 @@ class Swiper extends Component {
   constructor(props) {
     super(props);
     console.log("props:", this.props);
-    this.setState({
-      type: this.props.type
-    })
   }
 
   state = {
@@ -104,9 +101,9 @@ class Swiper extends Component {
     let count = 1;
     let dom = this.state.imgs;
     let type = 'leftright'
-    if (this.state.type !== 'leftright') {
-      type = 'updown';
-    }
+    // if (this.state.type !== 'leftright') {
+    //   type = 'updown';
+    // }
     this.setState(
       {
           timer: setInterval(() => {
@@ -120,7 +117,7 @@ class Swiper extends Component {
   }
 
   moveImg(dom, type, picIdx, token) {
-    if (type === 'leftright') {
+    // if (type === 'leftright') {
       let distance = 100;
       let step = distance / 60;
       let count = 0;
@@ -141,55 +138,56 @@ class Swiper extends Component {
           }
         }
       }, 10)
-    } else {
-      let distance = 380;
-      let step = distance / 60;
-      let count = 0;
-      let marginTop = dom.style.marginLeft;
-      marginTop = marginTop.split('');
-      marginTop.pop();
-      marginTop.pop();
-      let startPoint = marginTop.join('');
-      let startTag = startPoint;
-      let timer = null;
-      timer = setInterval(() => {
-        startPoint -= step;
-        dom.style.marginTop = startPoint + token;
-        count++;
-        if (count >= 60) {
-          dom.style.marginTop = -(Number(startTag) + 380) + 'px';
-          clearInterval(timer);
-          if (picIdx === 1) {
-            dom.style.marginTop = '-380px';
-          }
-        }
-      }, 10)
-    }
+    // } else {
+    //   let distance = 380;
+    //   let step = distance / 60;
+    //   let count = 0;
+    //   let marginTop = dom.style.marginLeft;
+    //   marginTop = marginTop.split('');
+    //   marginTop.pop();
+    //   marginTop.pop();
+    //   let startPoint = marginTop.join('');
+    //   let startTag = startPoint;
+    //   let timer = null;
+    //   timer = setInterval(() => {
+    //     startPoint -= step;
+    //     dom.style.marginTop = startPoint + token;
+    //     count++;
+    //     if (count >= 60) {
+    //       dom.style.marginTop = -(Number(startTag) + 380) + 'px';
+    //       clearInterval(timer);
+    //       if (picIdx === 1) {
+    //         dom.style.marginTop = '-380px';
+    //       }
+    //     }
+    //   }, 10)
+    // }
   }
 
   render() {
-    if (this.props === 'updown') {
-      return (
-        <div className={'box'}>
-          <div
-            id="imgs"
-            style={{ marginTop: '0', height: this.state.swiperList.length * 380 + 'px' }}
-          >
-            {
-              this.state.swiperList.map((el, index) => {
-                return (
-                  <img
-                    style={{ height: '380px' }}
-                    key={index}
-                    src={el}
-                    alt={'pic'}
-                  ></img>)
-              })
-            }
-          </div>
-        </div>
-      )
-    } else {
+    // if (this.props === 'updown') {
+      // return (
+      //   <div className={'ud-box'}>
+      //     <div
+      //       className={'ud-sub-box'}
+      //       id="imgs"
+      //       style={{ marginTop: '0', height: this.state.swiperList.length * 380 + 'px' }}
+      //     >
+      //       {
+      //         this.state.swiperList.map((el, index) => {
+      //           return (
+      //             <img
+      //               style={{ height: '380px' }}
+      //               key={index}
+      //               src={el}
+      //               alt={'pic'}
+      //             ></img>)
+      //         })
+      //       }
+      //     </div>
+      //   </div>
+      // )
+    // } else {
       return (
         <div className={'box'}>
           <div
@@ -210,7 +208,7 @@ class Swiper extends Component {
           </div>
         </div>
       )
-    }
+    // }
   }
 }
 

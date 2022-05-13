@@ -54,7 +54,7 @@ const DailySwiper = props => {
   const [nameList, setNameList] = useState([]);
   let [uploadTime, setUploadTime] = useState(3);
   const [isOpen, setOpen] = useState(false);
-  const [rollPicType, setRollPicType] = useState('updown')
+  // const [rollPicType, setRollPicType] = useState('updown')
   const [uploadStatus, setUploadStatus] = useState('');
 
   const { className, ...rest } = props;
@@ -103,7 +103,7 @@ const DailySwiper = props => {
 
     formData.append('swiperTime', uploadTime * 1000);
     formData.append('isopen', isOpen);
-    formData.append('rollPicType', rollPicType);
+    // formData.append('rollPicType', rollPicType);
 
     fetch('/api/swiperImages', { method: 'POST', body: formData })
       .then(response => response.json())
@@ -171,7 +171,7 @@ const DailySwiper = props => {
             onChange={() => { setOpen(false) }}
           />
         </label>
-        <label>
+        {/* <label>
           <p
             className={clsx(classes.subtitle, className)}
           >滚动方式:</p>
@@ -195,7 +195,7 @@ const DailySwiper = props => {
             checked={rollPicType === "updown"}
             onChange={() => { setRollPicType('updown') }}
           />
-        </label>
+        </label> */}
         <p
           className={clsx(classes.subtitle, className)}
         >已选择图片：</p>

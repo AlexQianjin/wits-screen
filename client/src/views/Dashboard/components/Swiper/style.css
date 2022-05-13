@@ -17,11 +17,11 @@
   height: 380px;
 }
 
-/* .ud-sub-box {
+.ud-sub-box {
   width: 380px; 
-} */
+}
 
-.ud-sub-box>imgs {
+.ud-sub-box>img {
   width: 100%;
   width: 380px;
 }

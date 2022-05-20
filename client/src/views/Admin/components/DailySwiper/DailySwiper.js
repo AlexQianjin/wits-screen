@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
@@ -50,16 +50,33 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DailySwiper = props => {
+  const [isLoading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [nameList, setNameList] = useState([]);
   let [uploadTime, setUploadTime] = useState(3);
   const [isOpen, setOpen] = useState(false);
-  // const [rollPicType, setRollPicType] = useState('updown')
   const [uploadStatus, setUploadStatus] = useState('');
-
+  const [scrollType, setScrollType] = useState("horizontal");
   const { className, ...rest } = props;
 
   const classes = useStyles();
+
+  useEffect(() => {
+    fetch('/api/swiperImages/getSwiperConfig')
+      .then(response => response.json())
+      .then(res => {
+        console.log(res);
+        const { settingTime, isSwiper, scrollType } = res.data;
+        setUploadTime(settingTime / 1000);
+        setOpen(isSwiper);
+        setScrollType(scrollType);
+        setLoading(false);
+      }).catch(err => {
+        console.log('An error has occurred on swiper config ', err);
+        setLoading(false);
+      });
+    return () => { }
+  }, [])
 
   const changeTime = e => {
     uploadTime = Number(e.target.value.trim());
@@ -103,7 +120,7 @@ const DailySwiper = props => {
 
     formData.append('swiperTime', uploadTime * 1000);
     formData.append('isopen', isOpen);
-    // formData.append('rollPicType', rollPicType);
+    formData.append('scrollType', scrollType);
 
     fetch('/api/swiperImages', { method: 'POST', body: formData })
       .then(response => response.json())
@@ -118,6 +135,14 @@ const DailySwiper = props => {
         console.log(err);
         setUploadStatus('Update Failed!');
       });
+  }
+
+  const onScrollTypeChange = e => {
+    console.log(e);
+    setScrollType(e.target.value);
+  }
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -151,7 +176,7 @@ const DailySwiper = props => {
             className={clsx(classes.subtitle, className)}
           >是否开启滚动图片:</p>
           <span
-          className={clsx(classes.imgList, className)}
+            className={clsx(classes.imgList, className)}
           >是：</span>
           <input
             type="radio"
@@ -161,7 +186,7 @@ const DailySwiper = props => {
             onChange={() => { setOpen(true) }}
           />
           <span
-          className={clsx(classes.imgList, className)}
+            className={clsx(classes.imgList, className)}
           >否：</span>
           <input
             type="radio"
@@ -171,31 +196,31 @@ const DailySwiper = props => {
             onChange={() => { setOpen(false) }}
           />
         </label>
-        {/* <label>
+        <label>
           <p
             className={clsx(classes.subtitle, className)}
           >滚动方式:</p>
           <span
             className={clsx(classes.imgList, className)}
-          >左右滚动：</span>
+          >水平：</span>
           <input
             type="radio"
-            name="rollPicType"
-            value="leftright"
-            checked={rollPicType === 'leftright'}
-            onChange={() => { setRollPicType('leftright') }}
+            name="scrollType"
+            value="horizontal"
+            checked={scrollType === 'horizontal'}
+            onChange={onScrollTypeChange}
           />
           <span
             className={clsx(classes.imgList, className)}
-          >上下滚动：</span>
+          >垂直：</span>
           <input
             type="radio"
-            name="rollPicType"
-            value="updown"
-            checked={rollPicType === "updown"}
-            onChange={() => { setRollPicType('updown') }}
+            name="scrollType"
+            value="vertical"
+            checked={scrollType === "vertical"}
+            onChange={onScrollTypeChange}
           />
-        </label> */}
+        </label>
         <p
           className={clsx(classes.subtitle, className)}
         >已选择图片：</p>

@@ -78,6 +78,18 @@ const writeTxt = (options) => {
   })
 }
 
+const getSwiperConfig = async (req, res) => {
+  let txt = readTxt();
+  res.send({
+    status: 200,
+    data: {
+      settingTime: Number(txt.SWIPER_TIME),
+      isSwiper: Boolean(txt.IS_SWIPER_PIC),
+      scrollType: txt.SCROLL_TYPE
+    }
+  });
+}
+
 // get params 'isopen' to decide openning swiper function
 const getShowSwiper = async (req, res) => {
   let txt = readTxt();
@@ -89,12 +101,12 @@ const getShowSwiper = async (req, res) => {
 }
 
 // get params 'isopen' to decide openning swiper function
-const getRollPicType = async (req, res) => {
+const getScrollType = async (req, res) => {
   let txt = readTxt();
   console.log(txt);
   res.send(JSON.stringify({
     status: 200,
-    rollpictype: txt.ROLL_PIC_TYPE
+    scrollType: txt.SCROLL_TYPE
   }))
 }
 
@@ -116,7 +128,7 @@ const getSwiperImages = async (req, res) => {
               file: [],
               setting_time: Number(txt.SWIPER_TIME),
               is_swiper: txt.IS_SWIPER_PIC,
-              roll_pic_type: txt.ROLL_PIC_TYPE
+              scroll_type: txt.SCROLL_TYPE
             }
           })
         } else {
@@ -138,7 +150,7 @@ const getSwiperImages = async (req, res) => {
               file: list,
               setting_time: Number(txt.SWIPER_TIME),
               is_swiper: txt.IS_SWIPER_PIC,
-              roll_pic_type: txt.ROLL_PIC_TYPE
+              scroll_type: txt.SCROLL_TYPE
             },
           })
         }
@@ -163,7 +175,7 @@ const getSwiperImages = async (req, res) => {
           file: list,
           setting_time: Number(txt.SWIPER_TIME),
           is_swiper: txt.IS_SWIPER_PIC,
-          roll_pic_type: txt.ROLL_PIC_TYPE
+          scroll_type: txt.SCROLL_TYPE
         },
       })
     }
@@ -245,9 +257,9 @@ const uploadImage = async (req, res) => {
         {
           SWIPER_TIME: req.body.swiperTime,
           IS_SWIPER_PIC: req.body.isopen,
-          ROLL_PIC_TYPE: req.body.rollPicType
+          SCROLL_TYPE: req.body.scrollType
         });
-      console.log(req.body.swiperTime, req.body.isopen);
+      console.log(req.body.swiperTime, req.body.isopen, req.body.scrollType);
       emptyDir();
 
       // Use the Func writeInPic cache images to local
@@ -269,4 +281,4 @@ const uploadImage = async (req, res) => {
   }
 };
 
-module.exports = { uploadImage, getSwiperImages, getShowSwiper, getRollPicType };
+module.exports = { uploadImage, getSwiperImages, getShowSwiper, getScrollType, getSwiperConfig };

@@ -74,7 +74,7 @@ const Daily = props => {
 			<Typography
 				className={classes.title}
 				gutterBottom
-				variant="h3"
+				variant="h4"
 			>
                 更新每日图片
 			</Typography>

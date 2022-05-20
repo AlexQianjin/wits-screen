@@ -153,7 +153,7 @@ const DailySwiper = props => {
       <Typography
         className={classes.title}
         gutterBottom
-        variant="h3"
+        variant="h4"
       >
         更新滚动图片
       </Typography>

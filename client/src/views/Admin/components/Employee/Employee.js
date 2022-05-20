@@ -73,7 +73,7 @@ const Employee = props => {
 			<Typography
 				className={classes.title}
 				gutterBottom
-				variant="h3"
+				variant="h4"
 			>
                 更新员工信息
 			</Typography>

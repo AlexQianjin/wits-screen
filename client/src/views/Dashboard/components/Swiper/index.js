@@ -46,7 +46,7 @@ function ImageSwiper() {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img style={{ maxHeight: 900 }} src={`data:image/png;base64,${image}`} />
+                        <img style={{ height: '100%', width: '100%', objectFit: 'fill' }} src={`data:image/png;base64,${image}`} />
                     </SwiperSlide>
                 ))}
             </Swiper>

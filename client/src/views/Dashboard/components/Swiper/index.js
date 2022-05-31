@@ -13,7 +13,6 @@ function ImageSwiper() {
         fetch('/api/swiperImages')
             .then(response => response.json())
             .then(res => {
-                console.log(res, 9944);
                 const { file, scroll_type, setting_time } = res.data;
                 setImages([...file]);
                 setScrollType(scroll_type);
@@ -29,7 +28,7 @@ function ImageSwiper() {
         return <div>Loading...</div>;
     }
     return (
-        <div style={{ maxHeight: 700, overflow: 'hidden', marginTop: 35 }}>
+        <div style={{ maxHeight: 550, overflow: 'hidden', marginTop: 35 }}>
             <Swiper
                 modules={[Autoplay, Scrollbar, Pagination]}
                 initialSlide={0}
@@ -38,7 +37,7 @@ function ImageSwiper() {
                 loop={true}
                 spaceBetween={0}
                 slidesPerView={1}
-                height={700}
+                height={550}
                 autoplay={{
                     delay: 3000,
                     disableOnInteraction: false

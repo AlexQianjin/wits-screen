@@ -52,9 +52,13 @@ Date | Cost Hours | Summary
 05/06/2022 | 3 | Finish 'uploadImages' & 'getSwiperImages' function in swiperImages
 05/08/2022 | 8 | Finish file operation for swiperImages and advance api of front-end and back-end
 05/09/2022 | 3 | Fixed some BUG of swiperImages.js and DailySwiper.js 
+05/19/2022 | 4 | Override images swiper function, import library swiperjs
+05/31/2022 | 2 | Fixed the swiper images will out of view height
 
 ## Release History
 Date | Summary
 --- | ---
 12/23/2020 | V1.0
 05/09/2022 | V2.0
+05/24/2022 | V2.1
+05/24/2022 | V2.2

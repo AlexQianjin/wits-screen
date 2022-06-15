@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab, TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 
-// import { Daily, DailySwiper, Employee } from './components';
+import Upload from './components/Upload';
 
 const Dashboard = () => {
     const [tab, setTab] = useState(0);
@@ -14,18 +14,7 @@ const Dashboard = () => {
     };
     return (
         <div className="h-screen bg-gray-100 relative antialiased">
-            {/* <Grid container spacing={0}>
-                <Grid item lg={2} sm={6} xl={2} xs={12}>
-                    <Daily />
-                </Grid>
-                <Grid item lg={2} sm={6} xl={2} xs={12}>
-                    <Employee />
-                </Grid>
-                <Grid item lg={2} sm={6} xl={2} xs={12}>
-                    <DailySwiper />
-                </Grid>
-            </Grid> */}
-            <div className="p-4 md:py-8 xl:px-20 md:container md:mx-w-6xl md:mx-auto">
+            <div className="p-4 md:py-8 xl:px-20 md:mx-w-6xl md:mx-auto">
                 <div className="hidden lg:flex lg:justify-between lg:items-center">
                     <a href="#" className="flex items-start gap-2 group">
                         <div className="bg-blue-600 text-white p-2 rounded-md group-hover:bg-blue-800">
@@ -77,34 +66,34 @@ const Dashboard = () => {
                             <Tab label="视频" />
                         </Tabs>
                         <div hidden={tab !== 0}>
-                            <div className="flex items-center justify-center w-full p-2">
-                                <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg
-                                            className="w-10 h-10 mb-3 text-gray-400"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                            ></path>
-                                        </svg>
-                                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                            <span className="font-semibold">点击上传</span>或者将文件拖拽到此区域
-                                        </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">图片格式支持PNG, JPG</p>
-                                    </div>
-                                    <input id="dropzone-file" type="file" className="hidden" />
-                                </label>
+                            <div className="flex items-center justify-start w-full p-2">
+                                <Upload />
                             </div>
                         </div>
-                        <div hidden={tab !== 1}>轮播设置</div>
-                        <div hidden={tab !== 2}>视频设置</div>
+                        <div hidden={tab !== 1}>
+                            <div className="w-1/4 p-2 mt-2 flex flex-col space-y-5">
+                                <TextField
+                                    value={10}
+                                    // onChange={handleChange('weight')}
+                                    label="滚动间隔"
+                                    variant="outlined"
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">秒</InputAdornment>
+                                    }}
+                                />
+                                <FormControl>
+                                    <FormLabel>滚动方向</FormLabel>
+                                    <RadioGroup row>
+                                        <FormControlLabel value={0} control={<Radio />} label="水平" />
+                                        <FormControlLabel value={1} control={<Radio />} label="垂直" />
+                                    </RadioGroup>
+                                </FormControl>
+                                <div>
+                                    <Upload />
+                                </div>
+                            </div>
+                        </div>
+                        <div hidden={tab !== 2}></div>
                     </div>
                     <button className="px-4 py-2 text-xs bg-green-300 text-white rounded uppercase tracking-wider font-semibold hover:bg-green-400">
                         启用

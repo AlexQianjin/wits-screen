@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Scrollbar, Pagination } from 'swiper';
 
-import 'swiper/swiper.scss';
+import 'swiper/css';
 
 function ImageSwiper() {
     const [isLoading, setLoading] = useState(true);

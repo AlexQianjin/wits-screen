@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Tabs, Tab, TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 
-import Upload from './components/Upload';
+import { Employee, Upload } from './components';
 
 const Dashboard = () => {
     const [tab, setTab] = useState(0);
@@ -71,7 +71,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div hidden={tab !== 1}>
-                            <div className="w-1/4 p-2 mt-2 flex flex-col space-y-5">
+                            <div className="p-2 mt-2 flex flex-col space-y-5">
                                 <TextField
                                     value={10}
                                     // onChange={handleChange('weight')}
@@ -99,27 +99,8 @@ const Dashboard = () => {
                         启用
                     </button>
                 </div>
-                <div className="col-span-3 bg-white p-6 rounded-xl border border-gray-50 flex flex-col space-y-6">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-sm text-gray-600 font-bold tracking-wide">员工信息</h2>
-                        <button className="px-4 py-2 text-xs bg-green-300 text-white rounded uppercase tracking-wider font-semibold hover:bg-green-400">
-                            上传
-                        </button>
-                    </div>
-                    <ul className="divide-y-2 divide-gray-100 overflow-x-auto w-full">
-                        <li className="py-3 flex justify-between text-sm text-gray-500 font-semibold">
-                            <p className="px-4 font-semibold">Today</p>
-                            <p className="px-4 text-gray-600">McDonald</p>
-                            <p className="px-4 tracking-wider">Cash</p>
-                            <p className="px-4 text-blue-600">Food</p>
-                        </li>
-                        <li className="py-3 flex justify-between text-sm text-gray-500 font-semibold">
-                            <p className="px-4 font-semibold">Today</p>
-                            <p className="px-4 text-gray-600">McDonald</p>
-                            <p className="px-4 tracking-wider">Cash</p>
-                            <p className="px-4 text-blue-600">Food</p>
-                        </li>
-                    </ul>
+                <div className="col-span-3 bg-white p-6 rounded-xl border border-gray-50 flex flex-col">
+                    <Employee />
                 </div>
             </div>
         </div>

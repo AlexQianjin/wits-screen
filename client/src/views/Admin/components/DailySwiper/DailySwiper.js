@@ -1,281 +1,101 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Card } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import { TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: '100%'
-  },
-  content: {
-    alignItems: 'center',
-    display: 'flex'
-  },
-  title: {
-    fontWeight: 700,
-    color: '#000',
-    marginTop: '16px'
-  },
-  avatar: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    height: 56,
-    width: 56
-  },
-  icon: {
-    height: 32,
-    width: 32
-  },
-  progress: {
-    marginTop: theme.spacing(3)
-  },
-  btn: {
-    backgroundColor: '#eee'
-  },
-  imgList: {
-    color: '#333'
-  },
-  img: {
-    width: '130px'
-  },
-  item: {
-    display: 'flex',
-    justifyContent: 'space-around'
-  },
-  subtitle: {
-    fontWeight: '700',
-    color: '#000'
-  }
-}));
+import Upload from '../Upload';
 
-const DailySwiper = props => {
-  const [isLoading, setLoading] = useState(true);
-  const [list, setList] = useState([]);
-  const [nameList, setNameList] = useState([]);
-  let [uploadTime, setUploadTime] = useState(3);
-  const [isOpen, setOpen] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState('');
-  const [scrollType, setScrollType] = useState("horizontal");
-  const { className, ...rest } = props;
+const DailySwiper = () => {
+    const [isLoading, setLoading] = useState(true);
+    const [images, setImages] = useState([]);
+    const [scrollTime, setScrollTime] = useState(3);
+    const [isOpen, setOpen] = useState(false);
+    const [scrollType, setScrollType] = useState('horizontal');
 
-  const classes = useStyles();
+    useEffect(() => {
+        fetch('/api/swiperImages/getSwiperConfig')
+            .then(response => response.json())
+            .then(res => {
+                console.log(res);
+                const { settingTime, isSwiper, scrollType } = res.data;
+                setOpen(isSwiper);
+                setScrollTime(settingTime / 1000);
+                setScrollType(scrollType);
+                setImages([]);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log('An error has occurred on swiper config ', err);
+                setLoading(false);
+            });
+        return () => {};
+    }, []);
 
-  useEffect(() => {
-    fetch('/api/swiperImages/getSwiperConfig')
-      .then(response => response.json())
-      .then(res => {
-        console.log(res);
-        const { settingTime, isSwiper, scrollType } = res.data;
-        setUploadTime(settingTime / 1000);
-        setOpen(isSwiper);
-        setScrollType(scrollType);
-        setLoading(false);
-      }).catch(err => {
-        console.log('An error has occurred on swiper config ', err);
-        setLoading(false);
-      });
-    return () => { }
-  }, [])
+    const submit = e => {
+        e.preventDefault();
 
-  const changeTime = e => {
-    uploadTime = Number(e.target.value.trim());
-    setUploadTime(uploadTime);
-  }
+        const formData = new FormData();
 
-  const refreshList = list => {
-    return [].filter.call(list, el => el !== null && el !== '')
-  }
+        formData.append('swiperTime', scrollTime * 1000);
+        formData.append('isopen', isOpen);
+        formData.append('scrollType', scrollType);
 
-  const addFile = e => {
-    e.preventDefault();
+        fetch('/api/swiperImages', { method: 'POST', body: formData })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status) {
+                    // setUploadStatus('Update Successfully!');
+                } else {
+                    // setUploadStatus('Update Failed!');
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                // setUploadStatus('Update Failed!');
+            });
+    };
 
-    let files = e.target.files;
+    const handleScrollTimeChange = e => {
+        setScrollTime(e.target.value);
+    };
 
-    for (let key in files) {
-      if (files[key] instanceof File) {
-        list.push(files[key]);
-        nameList.push(files[key].name);
-      }
+    const handleScrollTypeChange = e => {
+        console.log(e);
+        setScrollType(e.target.value);
+    };
+
+    if (isLoading) {
+        return <div>Loading...</div>;
     }
-    setList(refreshList(list));
-    setNameList(refreshList(nameList));
-  }
 
-  const remove = (e, idx) => {
-    list.splice(idx, 1);
-    nameList.splice(idx, 1);
-    setList(refreshList(list));
-    setNameList(refreshList(nameList));
-  }
-
-  const submit = e => {
-    e.preventDefault();
-
-    const formData = new FormData();
-
-    list.forEach(el => {
-      formData.append('image', el);
-    })
-
-    formData.append('swiperTime', uploadTime * 1000);
-    formData.append('isopen', isOpen);
-    formData.append('scrollType', scrollType);
-
-    fetch('/api/swiperImages', { method: 'POST', body: formData })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status) {
-          setUploadStatus('Update Successfully!');
-        } else {
-          setUploadStatus('Update Failed!');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        setUploadStatus('Update Failed!');
-      });
-  }
-
-  const onScrollTypeChange = e => {
-    console.log(e);
-    setScrollType(e.target.value);
-  }
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
-      <Typography
-        className={classes.title}
-        gutterBottom
-        variant="h3"
-      >
-        更新滚动图片
-      </Typography>
-      <form
-        id="upload-swiper-images-form"
-        onSubmit={submit}
-        method="post"
-      >
-        <label>
-          <p
-            className={clsx(classes.subtitle, className)}
-          >滚动时间间隔（秒）:</p>
-          <input
-            onChange={changeTime}
-            value={uploadTime}
-          />
-        </label>
-        <label>
-          <p
-            className={clsx(classes.subtitle, className)}
-          >是否开启滚动图片:</p>
-          <span
-            className={clsx(classes.imgList, className)}
-          >是：</span>
-          <input
-            type="radio"
-            name="open"
-            value="true"
-            checked={isOpen}
-            onChange={() => { setOpen(true) }}
-          />
-          <span
-            className={clsx(classes.imgList, className)}
-          >否：</span>
-          <input
-            type="radio"
-            name="open"
-            value="false"
-            checked={!isOpen}
-            onChange={() => { setOpen(false) }}
-          />
-        </label>
-        <label>
-          <p
-            className={clsx(classes.subtitle, className)}
-          >滚动方式:</p>
-          <span
-            className={clsx(classes.imgList, className)}
-          >水平：</span>
-          <input
-            type="radio"
-            name="scrollType"
-            value="horizontal"
-            checked={scrollType === 'horizontal'}
-            onChange={onScrollTypeChange}
-          />
-          <span
-            className={clsx(classes.imgList, className)}
-          >垂直：</span>
-          <input
-            type="radio"
-            name="scrollType"
-            value="vertical"
-            checked={scrollType === "vertical"}
-            onChange={onScrollTypeChange}
-          />
-        </label>
-        <p
-          className={clsx(classes.subtitle, className)}
-        >已选择图片：</p>
-        {
-          nameList.map((el, idx) => {
-            return (
-              <div
-                key={idx}
-                className={clsx(classes.item, className)}
-              >
-                <span
-                  className={clsx(classes.imgList, className)}
-                >{el}</span>
-                <Button
-                  onClick={e => remove(e, idx)}
-                >remove</Button>
-              </div>
-            )
-          })
-        }
-        <input
-          type="file"
-          multiple
-          onChange={addFile}
-          className={clsx(classes.btn, className)}
-        />
-        <Button
-          type="submit"
-          className={clsx(classes.btn, className)}
-        >
-          upload all
-        </Button>
-      </form>
-
-      <Typography
-        className={classes.title}
-        gutterBottom
-        variant="h6"
-      >
-        {uploadStatus}
-      </Typography>
-
-      <Typography
-        className={classes.title}
-        gutterBottom
-        variant="h6"
-      >
-        当前状态
-      </Typography>
-    </Card>
-  )
-}
-
-DailySwiper.propTypes = {
-  className: PropTypes.string
+    return (
+        <div className="p-2 mt-2 flex flex-col space-y-5">
+            <TextField
+                value={scrollTime}
+                onChange={handleScrollTimeChange}
+                label="滚动间隔"
+                variant="outlined"
+                InputProps={{
+                    endAdornment: <InputAdornment position="end">秒</InputAdornment>
+                }}
+            />
+            <FormControl>
+                <FormLabel>滚动方向</FormLabel>
+                <RadioGroup row value={scrollType} onChange={handleScrollTypeChange}>
+                    <FormControlLabel value="horizontal" control={<Radio />} label="水平" />
+                    <FormControlLabel value="vertical" control={<Radio />} label="垂直" />
+                </RadioGroup>
+            </FormControl>
+            <div className="grid grid-cols-4 gap-4">
+                <div className="h-24 w-24">
+                    <Upload />
+                </div>
+                {images.map((image, index) => (
+                    <img key={index} className="h-24 w-24" src={image}></img>
+                ))}
+            </div>
+            <button onClick={submit}>更新</button>
+        </div>
+    );
 };
 
 export default DailySwiper;
+

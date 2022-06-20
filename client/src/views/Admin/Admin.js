@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 
-import { Tabs, Tab, TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 
-import { Employee, Upload } from './components';
+import { Daily, DailySwiper, Employee } from './components';
+
+const mapping = ['image', 'swiper', 'video'];
 
 const Dashboard = () => {
     const [tab, setTab] = useState(0);
+    const [activity, setActivity] = useState('image');
 
     const handleTabChange = (e, newValue) => {
         console.log(newValue);
         setTab(newValue);
+    };
+
+    const handleActive = () => {
+        setActivity(mapping[tab]);
     };
     return (
         <div className="h-screen bg-gray-100 relative antialiased">
@@ -58,44 +65,56 @@ const Dashboard = () => {
                             <Tab
                                 label={
                                     <span>
-                                        <CheckCircle style={{ verticalAlign: 'top', color: 'rgb(74 222 128)' }} /> 图片
+                                        {activity === 'image' ? (
+                                            <CheckCircle style={{ verticalAlign: 'top', color: 'rgb(74 222 128)' }} />
+                                        ) : (
+                                            ''
+                                        )}
+                                        图片
                                     </span>
                                 }
                             />
-                            <Tab label="轮播" />
-                            <Tab label="视频" />
+                            <Tab
+                                label={
+                                    <span>
+                                        {activity === 'swiper' ? (
+                                            <CheckCircle style={{ verticalAlign: 'top', color: 'rgb(74 222 128)' }} />
+                                        ) : (
+                                            ''
+                                        )}
+                                        轮播
+                                    </span>
+                                }
+                            />
+                            <Tab
+                                label={
+                                    <span>
+                                        {activity === 'video' ? (
+                                            <CheckCircle style={{ verticalAlign: 'top', color: 'rgb(74 222 128)' }} />
+                                        ) : (
+                                            ''
+                                        )}
+                                        视频
+                                    </span>
+                                }
+                            />
                         </Tabs>
                         <div hidden={tab !== 0}>
                             <div className="flex items-center justify-start w-full p-2">
-                                <Upload />
+                                <Daily />
                             </div>
                         </div>
                         <div hidden={tab !== 1}>
-                            <div className="p-2 mt-2 flex flex-col space-y-5">
-                                <TextField
-                                    value={10}
-                                    // onChange={handleChange('weight')}
-                                    label="滚动间隔"
-                                    variant="outlined"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="end">秒</InputAdornment>
-                                    }}
-                                />
-                                <FormControl>
-                                    <FormLabel>滚动方向</FormLabel>
-                                    <RadioGroup row>
-                                        <FormControlLabel value={0} control={<Radio />} label="水平" />
-                                        <FormControlLabel value={1} control={<Radio />} label="垂直" />
-                                    </RadioGroup>
-                                </FormControl>
-                                <div>
-                                    <Upload />
-                                </div>
+                            <div>
+                                <DailySwiper />
                             </div>
                         </div>
                         <div hidden={tab !== 2}></div>
                     </div>
-                    <button className="px-4 py-2 text-xs bg-green-300 text-white rounded uppercase tracking-wider font-semibold hover:bg-green-400">
+                    <button
+                        className="px-4 py-2 text-xs bg-green-300 text-white rounded uppercase tracking-wider font-semibold hover:bg-green-400"
+                        onClick={handleActive}
+                    >
                         启用
                     </button>
                 </div>

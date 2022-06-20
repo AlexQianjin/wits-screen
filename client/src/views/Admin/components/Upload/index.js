@@ -2,10 +2,10 @@ import { React } from 'react';
 
 function Upload() {
     return (
-        <label className="flex flex-col items-center p-2 justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+        <label className="w-full h-full flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div className="flex flex-col items-center justify-center pt-1 pb-1">
                 <svg
-                    className="w-10 h-10 mb-3 text-gray-400"
+                    className="w-1/3 h-full mb-3 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -19,9 +19,9 @@ function Upload() {
                     ></path>
                 </svg>
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">点击上传</span>
+                    <span className="font-semibold text-xs">点击上传</span>
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">图片格式支持PNG, JPG</p>
+                {/* <p className="text-xs text-gray-500 dark:text-gray-400">图片格式支持PNG, JPG</p> */}
             </div>
             <input id="dropzone-file" type="file" className="hidden" />
         </label>
@@ -29,3 +29,4 @@ function Upload() {
 }
 
 export default Upload;
+

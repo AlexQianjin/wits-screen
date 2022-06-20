@@ -1,118 +1,58 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Card } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import Upload from '../Upload';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		height: '100%'
-	},
-	content: {
-		alignItems: 'center',
-		display: 'flex'
-	},
-	title: {
-		fontWeight: 700,
-		color: '#000',
-		marginTop: '16px'
-	},
-	avatar: {
-		backgroundColor: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
-		height: 56,
-		width: 56
-	},
-	icon: {
-		height: 32,
-		width: 32
-	},
-	progress: {
-		marginTop: theme.spacing(3)
-	}
-}));
+const Daily = () => {
+    const [loading, setLoading] = useState(true);
+    const [images, setImages] = useState([]);
+    // const handleFileUpload = e => {
+    //     console.log(e.target.files[0]);
+    //     setSeletedFile(e.target.files[0]);
+    // };
 
-const Daily = props => {
-	const [seletedFile, setSeletedFile] = useState(null);
-	const [uploadStatus, setUploadStatus] = useState('');
+    // const handleSubmit = e => {
+    //     e.preventDefault();
 
-	const handleFileUpload = e => {
-		console.log(e.target.files[0]);
-		setSeletedFile(e.target.files[0]);
-	};
+    //     let formData = new FormData();
+    //     formData.append('image', seletedFile);
+    //     fetch('/api/images', { method: 'POST', body: formData })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             if (data.status) {
+    //                 setUploadStatus('Update Successfully!');
+    //             } else {
+    //                 setUploadStatus('Update Failed!');
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //             setUploadStatus('Update Failed!');
+    //         });
+    // };
 
-	const handleSubmit = e => {
-		e.preventDefault();
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+            setImages([]);
+        }, 1000);
+        return () => {};
+    }, []);
 
-		let formData = new FormData();
-		formData.append('image', seletedFile);
-		fetch('/api/images', {method: 'POST', body: formData})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-				if (data.status) {
-					setUploadStatus('Update Successfully!');
-				} else {
-					setUploadStatus('Update Failed!');
-				}
-			})
-			.catch(err => {
-				console.log(err);
-				setUploadStatus('Update Failed!');
-			});
-	};
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
-	const { className, ...rest } = props;
-
-	const classes = useStyles();
-
-	return (
-		<Card
-			{...rest}
-			className={clsx(classes.root, className)}
-		>
-			<Typography
-				className={classes.title}
-				gutterBottom
-				variant="h3"
-			>
-                更新每日图片
-			</Typography>
-			<form
-				id="upload-image-form"
-				onSubmit={handleSubmit}
-				method="post"
-			>
-
-				<TextField
-					id="upload-image"
-					name="upload-image"
-					label="Upload Image"
-					type="file"
-					inputProps={{accept: 'image/*'}}
-					onChange={handleFileUpload}
-				/>
-				<Button
-					type="submit"
-					color="primary"
-					size="large"
-				>
-					Upload Image
-				</Button>
-			</form>
-			<Typography
-				className={classes.title}
-				gutterBottom
-				variant="h6"
-			>
-				{uploadStatus}
-			</Typography>
-		</Card>
-	);
-};
-
-Daily.propTypes = {
-	className: PropTypes.string
+    return (
+        <div className="grid grid-cols-4 gap-4">
+            <div className="h-24 w-24">
+                <Upload />
+            </div>
+            {images.map((image, index) => (
+                <img key={index} className="h-24 w-24" src={image}></img>
+            ))}
+        </div>
+    );
 };
 
 export default Daily;
+

@@ -6,19 +6,19 @@ import Upload from '../Upload';
 const DailySwiper = () => {
     const [isLoading, setLoading] = useState(true);
     const [images, setImages] = useState([]);
-    const [scrollTime, setScrollTime] = useState(3);
-    const [isOpen, setOpen] = useState(false);
-    const [scrollType, setScrollType] = useState('horizontal');
+    const [swiperInterval, setSwiperInterval] = useState(3);
+    const [swiperType, setSwiperType] = useState('horizontal');
+    const [swiperCurrent, setSwiperCurrent] = useState([]);
 
     useEffect(() => {
-        fetch('/api/swiperImages/getSwiperConfig')
+        fetch('/api/v2/swiper')
             .then(response => response.json())
             .then(res => {
                 console.log(res);
-                const { settingTime, isSwiper, scrollType } = res.data;
-                setOpen(isSwiper);
-                setScrollTime(settingTime / 1000);
-                setScrollType(scrollType);
+                const { interval, type, current } = res.data;
+                setSwiperInterval(interval / 1000);
+                setSwiperType(type);
+                setSwiperCurrent(current);
                 setImages([]);
                 setLoading(false);
             })
@@ -73,6 +73,11 @@ const DailySwiper = () => {
                 onChange={handleScrollTimeChange}
                 label="滚动间隔"
                 variant="outlined"
+                type="number"
+                inputProps={{
+                    min: 1,
+                    max: 150
+                }}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">秒</InputAdornment>
                 }}

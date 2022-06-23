@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, InputAdornment, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import CheckCircle from '@material-ui/icons/CheckCircle';
 
 import Upload from '../Upload';
 
 const DailySwiper = () => {
     const [isLoading, setLoading] = useState(true);
+    const [imagesLoading, setImagesLoading] = useState(true);
     const [images, setImages] = useState([]);
     const [swiperInterval, setSwiperInterval] = useState(3);
     const [swiperType, setSwiperType] = useState('horizontal');
@@ -15,16 +17,25 @@ const DailySwiper = () => {
             .then(response => response.json())
             .then(res => {
                 console.log(res);
-                const { interval, type, current } = res.data;
+                const { interval, type, current } = res;
                 setSwiperInterval(interval / 1000);
                 setSwiperType(type);
                 setSwiperCurrent(current);
-                setImages([]);
                 setLoading(false);
             })
             .catch(err => {
                 console.log('An error has occurred on swiper config ', err);
                 setLoading(false);
+            });
+        fetch('/api/v2/resource/images')
+            .then(response => response.json())
+            .then(res => {
+                setImages(res);
+                setImagesLoading(false);
+            })
+            .catch(err => {
+                console.log('An error has occurred on swiper config ', err);
+                setImagesLoading(false);
             });
         return () => {};
     }, []);
@@ -34,9 +45,9 @@ const DailySwiper = () => {
 
         const formData = new FormData();
 
-        formData.append('swiperTime', scrollTime * 1000);
-        formData.append('isopen', isOpen);
-        formData.append('scrollType', scrollType);
+        formData.append('interval', swiperInterval * 1000);
+        formData.append('current', swiperCurrent);
+        formData.append('type', swiperType);
 
         fetch('/api/swiperImages', { method: 'POST', body: formData })
             .then(response => response.json())
@@ -54,22 +65,31 @@ const DailySwiper = () => {
     };
 
     const handleScrollTimeChange = e => {
-        setScrollTime(e.target.value);
+        setSwiperInterval(e.target.value);
     };
 
     const handleScrollTypeChange = e => {
         console.log(e);
-        setScrollType(e.target.value);
+        setSwiperType(e.target.value);
     };
 
-    if (isLoading) {
+    const handleCurrentChange = image => {
+        const { id } = image;
+        if (swiperCurrent.includes(id)) {
+            setSwiperCurrent(swiperCurrent.filter(item => item !== id));
+        } else {
+            setSwiperCurrent([...swiperCurrent, id]);
+        }
+    };
+
+    if (isLoading || imagesLoading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className="p-2 mt-2 flex flex-col space-y-5">
             <TextField
-                value={scrollTime}
+                value={swiperInterval}
                 onChange={handleScrollTimeChange}
                 label="滚动间隔"
                 variant="outlined"
@@ -84,7 +104,7 @@ const DailySwiper = () => {
             />
             <FormControl>
                 <FormLabel>滚动方向</FormLabel>
-                <RadioGroup row value={scrollType} onChange={handleScrollTypeChange}>
+                <RadioGroup row value={swiperType} onChange={handleScrollTypeChange}>
                     <FormControlLabel value="horizontal" control={<Radio />} label="水平" />
                     <FormControlLabel value="vertical" control={<Radio />} label="垂直" />
                 </RadioGroup>
@@ -94,7 +114,16 @@ const DailySwiper = () => {
                     <Upload />
                 </div>
                 {images.map((image, index) => (
-                    <img key={index} className="h-24 w-24" src={image}></img>
+                    <div
+                        key={index}
+                        className="h-24 w-24 relative border-2 border-gray-300 border-dashed rounded-lg hover:bg-gray-100 cursor-pointer select-none"
+                        onClick={() => handleCurrentChange(image)}
+                    >
+                        <img src={image.src} className="absolute top-1/2 -translate-y-1/2"></img>
+                        <div hidden={!swiperCurrent.includes(image.id)} className="absolute right-0.5 top-0.5">
+                            <CheckCircle style={{ verticalAlign: 'top', color: 'rgb(74 222 128)' }} />
+                        </div>
+                    </div>
                 ))}
             </div>
             <button onClick={submit}>更新</button>

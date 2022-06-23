@@ -6,6 +6,10 @@ var swiperController = require('../../controllers/swiper');
 var videoController = require('../../controllers/video');
 var resourceController = require('../../controllers/resource');
 
+// settings route
+router.get('/settings', resourceController.getSettings);
+router.post('/settings', resourceController.setSettings);
+
 // daily route
 router.get('/daily', dailyController.getDaily);
 
@@ -17,6 +21,6 @@ router.get('/video', videoController.getVideo);
 
 //resource route
 router.get('/resource/images', resourceController.getImages);
-router.get('/resource/images', resourceController.getVideos);
+router.get('/resource/videos', resourceController.getVideos);
 
 module.exports = router;

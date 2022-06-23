@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Tabs, Tab } from '@material-ui/core';
 import CheckCircle from '@material-ui/icons/CheckCircle';
@@ -8,6 +8,7 @@ import { Daily, DailySwiper, Employee } from './components';
 const mapping = ['image', 'swiper', 'video'];
 
 const Dashboard = () => {
+    const [isLoading, setLoading] = useState(true);
     const [tab, setTab] = useState(0);
     const [activity, setActivity] = useState('image');
 
@@ -17,8 +18,48 @@ const Dashboard = () => {
     };
 
     const handleActive = () => {
-        setActivity(mapping[tab]);
+        fetch('/api/v2/settings', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: JSON.stringify({
+                enable: mapping[tab]
+            })
+        })
+            .then(response => response.json())
+            .then(res => {
+                const { status, message } = res;
+                if (status === 200) {
+                    setActivity(mapping[tab]);
+                } else {
+                    throw new Error(message);
+                }
+            })
+            .catch(err => {
+                console.log('Has an error occurred during change enable function', err);
+            });
     };
+
+    useEffect(() => {
+        fetch('/api/v2/settings')
+            .then(response => response.json())
+            .then(res => {
+                const { enable } = res;
+                setActivity(enable);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log('has an error occurred during fetch the settings', err);
+                setLoading(false);
+            });
+        return () => {};
+    }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="h-screen bg-gray-100 relative antialiased">
             <div className="p-4 md:py-8 xl:px-20 md:mx-w-6xl md:mx-auto">

@@ -17,4 +17,16 @@ function getConfiguration(configPath) {
     });
 }
 
-module.exports = { getConfiguration };
+function setConfiguration(configPath, configuration) {
+    return new Promise((resolve, reject) => {
+        if (!configPath) resolve();
+        fs.writeFile(path.join(__dirname, '../public/') + configPath, JSON.stringify(configuration), { encoding: 'utf-8' }, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            resolve();
+        });
+    });
+}
+
+module.exports = { getConfiguration, setConfiguration };

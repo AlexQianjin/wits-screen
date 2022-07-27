@@ -9,13 +9,16 @@ const usersRouter = require('./routes/users');
 const employeesRouter = require('./routes/employees');
 const imagesRouter = require('./routes/images');
 const swiperImageRouter = require('./routes/swiperImages');
+const videosRouter = require('./routes/videos');
 
 const app = express();
 
 // enable files upload
-app.use(fileUpload({
-    createParentPath: true
-}));
+app.use(
+    fileUpload({
+        createParentPath: true
+    })
+);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,11 +31,11 @@ app.use('/users', usersRouter);
 app.use('/api/employees', employeesRouter);
 app.use('/api/images', imagesRouter);
 app.use('/api/swiperImages', swiperImageRouter);
+app.use('/api/videos', videosRouter);
 
-app.route('*')
-    .get(
-    (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-    });
+app.route('*').get((req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 module.exports = app;
+

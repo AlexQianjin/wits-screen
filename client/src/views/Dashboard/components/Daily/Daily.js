@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, CardMedia } from '@material-ui/core';
 import Swiper from './../Swiper';
+import VideoPlayer from './../VideoPlayer';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,8 +35,12 @@ const useStyles = makeStyles(theme => ({
 
 const Daily = props => {
     const { className, ...rest } = props;
+    const [swiperLoading, setSwiperLoading] = useState(true);
+    const [videosLoading, setVideosLoading] = useState(true);
+    const [imagesLoading, setImagesLoading] = useState(true);
     let [singlePic, setSinglePic] = useState('./recommanded-image.png');
     let [isSwiper, setIsSwiper] = useState();
+    let [isVideo, setVideo] = useState(false);
     // let [rollPicType, setRollPicType] = useState('leftright');
     const classes = useStyles();
 
@@ -49,18 +54,17 @@ const Daily = props => {
                 } else {
                     setIsSwiper(false);
                 }
+                setSwiperLoading(false);
             });
 
-        // fetch('/api/swiperImages/getRollPicType', {})
-        // 	.then(res => res.json())
-        // 	.then(data => {
-        // 		if (data.status === 200) {
-        // 			setRollPicType(data.roll_pic_type);
-        // 		} else {
-        // 			console.log("roll type err");
-        // 			setRollPicType('leftright');
-        // 		}
-        // 	});
+        fetch('/api/videos/isEnabled', {})
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 200) {
+                    setVideo(data.isEnabled);
+                }
+                setVideosLoading(false);
+            });
 
         fetch('/api/images', {})
             .then(res => res.json())
@@ -68,9 +72,25 @@ const Daily = props => {
                 console.log('imagedata:', data);
                 data = data.data;
                 setSinglePic('data:image/png;base64,' + data.file);
+                setImagesLoading(false);
             });
         // setIsSwiper(true);
     }, []);
+
+    if (swiperLoading || videosLoading || imagesLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const displayEl = () => {
+        if (isVideo) {
+            console.log();
+            return <VideoPlayer />;
+        }
+        if (isSwiper) {
+            return <Swiper />;
+        }
+        return <CardMedia component="img" alt="Daily" image={singlePic} title="Daily" style={{ marginTop: '35px' }}></CardMedia>;
+    };
 
     return (
         <Card {...rest} className={clsx(classes.root, className)}>
@@ -94,14 +114,7 @@ const Daily = props => {
                         ></div>
                     </Grid>
                 </Grid>
-                {
-                    // type={rollPicType}
-                    isSwiper ? (
-                        <Swiper />
-                    ) : (
-                        <CardMedia component="img" alt="Daily" image={singlePic} title="Daily" style={{ marginTop: '35px' }}></CardMedia>
-                    )
-                }
+                {displayEl()}
             </CardContent>
         </Card>
     );

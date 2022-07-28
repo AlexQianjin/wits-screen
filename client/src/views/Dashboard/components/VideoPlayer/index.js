@@ -45,7 +45,7 @@ function VideoPlayer() {
                     height={550}
                     style={{ border: '1px solid white' }}
                     autoPlay="autoplay"
-                    src={`./videos/${videos[currentPlay]}`}
+                    src={`./videos/${videos[0]}`}
                     loop
                     muted
                     ref={videoRef}
@@ -59,13 +59,14 @@ function VideoPlayer() {
                     height={550}
                     style={{ border: '1px solid white' }}
                     autoPlay="autoplay"
-                    src={`./videos/${videos[0]}`}
+                    src={`./videos/${videos[currentPlay]}`}
                     onEnded={handleEnded}
                     muted
                     ref={videoRef}
                 ></video>
             );
         }
+        return <div>Please select play method</div>;
     };
     return <div>{displayVideo()}</div>;
 }

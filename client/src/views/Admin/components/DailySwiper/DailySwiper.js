@@ -69,7 +69,7 @@ const DailySwiper = props => {
         const { settingTime, isSwiper, scrollType } = res.data;
         setUploadTime(settingTime / 1000);
         setOpen(isSwiper);
-        setScrollType(scrollType);
+        setScrollType(scrollType || 'horizontal');
         setLoading(false);
       }).catch(err => {
         console.log('An error has occurred on swiper config ', err);
